@@ -1,0 +1,27 @@
+.venv/
+.env
+
+# Track the pre-seeded SQLite DB + shipped media so container boot doesn't need
+# to reseed; everything else under data/ stays local-only.
+data/*
+!data/flo.db
+!data/events/
+!data/speakers/
+!data/reels/
+data/reels/tamper.mp4
+data/e2e/
+data/7180175-hd_1080_1920_25fps/
+data/*.db-shm
+data/*.db-wal
+data/*.db-journal
+data/*.bak
+
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+__pycache__/
+*.pyc
+
+# Local dev test artefacts (E2E logs, run scripts) — private to the machine
+.test_runs/
+

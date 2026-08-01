@@ -1,0 +1,142 @@
+[
+  {
+    "speaker_id": 1,
+    "name": "Andrew Ng",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Andrew_Ng_at_TechCrunch_Disrupt_SF_2017.jpg",
+    "key": "speakers/andrew-ng.jpg"
+  },
+  {
+    "speaker_id": 2,
+    "name": "Andrej Karpathy",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Andrej_Karpathy%2C_OpenAI.png",
+    "key": "speakers/andrej-karpathy.jpg"
+  },
+  {
+    "speaker_id": 3,
+    "name": "Fei-Fei Li",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Fei-Fei_Li_at_AI_for_Good_2017.jpg",
+    "key": "speakers/fei-fei-li.jpg"
+  },
+  {
+    "speaker_id": 4,
+    "name": "Yann LeCun",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Laura_Chaubard_%26_Yann_Le_Cun_-_2024_%2853814052697%29_%28cropped%29.jpg",
+    "key": "speakers/yann-lecun.jpg"
+  },
+  {
+    "speaker_id": 5,
+    "name": "Demis Hassabis",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Demis_Hassabis%2C_2024_Nobel_Prize_Laureate_in_Chemistry_7_%28cropped%29.jpg",
+    "key": "speakers/demis-hassabis.jpg"
+  },
+  {
+    "speaker_id": 6,
+    "name": "Sara Hooker",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/sara-hooker.jpg"
+  },
+  {
+    "speaker_id": 7,
+    "name": "Chelsea Finn",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Chelsea_Finn_and_Vestri_the_robot%2C_UC_Berkeley.jpg",
+    "key": "speakers/chelsea-finn.jpg"
+  },
+  {
+    "speaker_id": 8,
+    "name": "Jeremy Howard",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Jeremy_Howard.jpg",
+    "key": "speakers/jeremy-howard.jpg"
+  },
+  {
+    "speaker_id": 9,
+    "name": "Emily Bender",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Emily_M_Bender_CHM_Mountain_View_March_2025.jpg",
+    "key": "speakers/emily-bender.jpg"
+  },
+  {
+    "speaker_id": 10,
+    "name": "Percy Liang",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/percy-liang.jpg"
+  },
+  {
+    "speaker_id": 11,
+    "name": "Simon Willison",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Simon_Willison_%282929211382%29_%28cropped%29.jpg",
+    "key": "speakers/simon-willison.jpg"
+  },
+  {
+    "speaker_id": 12,
+    "name": "Rachel Thomas",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Rachel_Thomas_at_Linux_Foundation.jpg",
+    "key": "speakers/rachel-thomas.jpg"
+  },
+  {
+    "speaker_id": 13,
+    "name": "Aravind Srinivas",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/aravind-srinivas.jpg"
+  },
+  {
+    "speaker_id": 14,
+    "name": "Clement Delangue",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/clement-delangue.jpg"
+  },
+  {
+    "speaker_id": 15,
+    "name": "Harrison Chase",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/harrison-chase.jpg"
+  },
+  {
+    "speaker_id": 16,
+    "name": "Jerry Liu",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/en/e/ea/Jerry_Maguire_movie_poster.jpg",
+    "key": "speakers/jerry-liu.jpg"
+  },
+  {
+    "speaker_id": 17,
+    "name": "Chip Huyen",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/chip-huyen.jpg"
+  },
+  {
+    "speaker_id": 18,
+    "name": "Guido van Rossum",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Guido_van_Rossum_in_PyConUS24_%28cropped%29.jpg",
+    "key": "speakers/guido-van-rossum.jpg"
+  },
+  {
+    "speaker_id": 19,
+    "name": "Linus Torvalds",
+    "source": "wikipedia",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg",
+    "key": "speakers/linus-torvalds.jpg"
+  },
+  {
+    "speaker_id": 20,
+    "name": "Sebastian Raschka",
+    "source": "initials_fallback",
+    "source_url": null,
+    "key": "speakers/sebastian-raschka.jpg"
+  }
+]

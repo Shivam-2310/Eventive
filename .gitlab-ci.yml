@@ -1,0 +1,116 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+default:
+  interruptible: true
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+
+variables:
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_DRIVER: overlay2
+  GIT_DEPTH: 1
+  DOCKERFILE_PATH: docker/Dockerfile
+  FOLDER_TO_ZIP: "hackathon-docs"
+
+stages:
+  - build_deploy
+  - upload_docs
+
+build_and_deploy:
+  stage: build_deploy
+  image: docker:24-cli
+  services:
+    - docker:24-dind
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - export REPO_NAME_LOWER=$(echo "$CI_PROJECT_NAME" | tr '[:upper:]' '[:lower:]')
+    - export IMAGE_NAME="${DOCKER_REGISTRY}/${REPO_NAME_LOWER}"
+    - export CONTAINER_APP_NAME="${REPO_NAME_LOWER}"
+    - echo "${DOCKER_PASSWORD}" | docker login "${DOCKER_REGISTRY}" -u "${DOCKER_USERNAME}" --password-stdin
+  script:
+    - docker pull "${IMAGE_NAME}:latest" || true
+    - docker build -f "${DOCKERFILE_PATH}" -t "${IMAGE_NAME}:latest" -t "${IMAGE_NAME}:${IMAGE_TAG}" --cache-from "${IMAGE_NAME}:latest" .
+    - docker push "${IMAGE_NAME}:latest" &
+    - docker push "${IMAGE_NAME}:${IMAGE_TAG}"
+    - wait
+    - |
+      docker run --rm \
+        -v "$(pwd)/docker:/workspace" \
+        -e AZURE_CLIENT_ID="${AZURE_CLIENT_ID}" \
+        -e AZURE_CLIENT_SECRET="${AZURE_CLIENT_SECRET}" \
+        -e AZURE_TENANT_ID="${AZURE_TENANT_ID}" \
+        -e AZURE_SUBSCRIPTION_ID="${AZURE_SUBSCRIPTION_ID}" \
+        -e AZURE_RESOURCE_GROUP="${AZURE_RESOURCE_GROUP}" \
+        -e CONTAINER_APP_ENVIRONMENT="${CONTAINER_APP_ENVIRONMENT}" \
+        -e DOCKER_REGISTRY="${DOCKER_REGISTRY}" \
+        -e DOCKER_USERNAME="${DOCKER_USERNAME}" \
+        -e DOCKER_PASSWORD="${DOCKER_PASSWORD}" \
+        -e IMAGE_NAME="${IMAGE_NAME}" \
+        -e IMAGE_TAG="${IMAGE_TAG}" \
+        -e CONTAINER_APP_NAME="${CONTAINER_APP_NAME}" \
+        -e REGISTRATION_API_URL="${REGISTRATION_API_URL}" \
+        -e CI_PIPELINE_ID="${CI_PIPELINE_ID}" \
+        -e GEMINI_API_KEY="${GEMINI_API_KEY}" \
+        -e GROQ_API_KEY="${GROQ_API_KEY}" \
+        -e JWT_SECRET="${JWT_SECRET}" \
+        -e ADMIN_EMAIL="${ADMIN_EMAIL}" \
+        -e ADMIN_INITIAL_PASSWORD="${ADMIN_INITIAL_PASSWORD}" \
+        -e MEDIA_SIGNING_SECRET="${MEDIA_SIGNING_SECRET}" \
+        mcr.microsoft.com/azure-cli:2.61.0 bash -c '
+        set -e
+        az login --service-principal -u "${AZURE_CLIENT_ID}" -p "${AZURE_CLIENT_SECRET}" --tenant "${AZURE_TENANT_ID}"
+        az account set --subscription "${AZURE_SUBSCRIPTION_ID}"
+        APP_URL=$(az deployment group create \
+          --name "deploy-${CI_PIPELINE_ID}" \
+          --resource-group "${AZURE_RESOURCE_GROUP}" \
+          --template-file /workspace/arm-template.json \
+          --parameters containerAppName="${CONTAINER_APP_NAME}" environmentName="${CONTAINER_APP_ENVIRONMENT}" dockerRegistry="${DOCKER_REGISTRY}" dockerUsername="${DOCKER_USERNAME}" dockerPassword="${DOCKER_PASSWORD}" imageName="${IMAGE_NAME}" imageTag="${IMAGE_TAG}" geminiApiKey="${GEMINI_API_KEY}" groqApiKey="${GROQ_API_KEY}" jwtSecret="${JWT_SECRET}" adminEmail="${ADMIN_EMAIL}" adminInitialPassword="${ADMIN_INITIAL_PASSWORD}" mediaSigningSecret="${MEDIA_SIGNING_SECRET:-dev-media-secret}" \
+          --query "properties.outputs.fqdn.value" -o tsv)
+        echo "Deployed to https://${APP_URL}"
+      '
+  # Requires GitLab CI/CD variables (mask + protect the secret ones):
+  #   GEMINI_API_KEY           (masked)  — optional; agent falls back to stub if unset
+  #   GROQ_API_KEY             (masked)  — optional; agent prefers Groq over Gemini when set
+  #   JWT_SECRET               (masked)  — REQUIRED; generate with `openssl rand -hex 32`
+  #   ADMIN_EMAIL              (var)     — REQUIRED; email for the seeded admin login
+  #   ADMIN_INITIAL_PASSWORD   (masked)  — REQUIRED; password for the seeded admin login
+  #   MEDIA_SIGNING_SECRET     (masked)  — optional; must match the value used
+  #                                        when the shipped backend/data/flo.db was
+  #                                        generated (defaults to `dev-media-secret`
+  #                                        both in ARM and in app.infra.config).
+
+compress_and_upload:
+  stage: upload_docs
+  needs:
+    - build_and_deploy
+  image: docker:24-cli
+  services:
+    - docker:24-dind
+  script:
+    - export TEAM_NAME=$(echo "$CI_PROJECT_NAME" | tr '[:upper:]' '[:lower:]')
+    - |
+      docker run --rm \
+        -v "$(pwd):/workspace" \
+        -e TEAM_NAME="${TEAM_NAME}" \
+        -e AZURE_STORAGE_ACCOUNT="${Application_Artifact_Storage_Name}" \
+        -e AZURE_STORAGE_KEY="${Application_Artifact_Storage_Key}" \
+        mcr.microsoft.com/azure-cli:2.61.0 bash -c '
+        set -e
+        CONTAINER="${TEAM_NAME}"
+        az storage container create --name "${CONTAINER}" --account-name "${AZURE_STORAGE_ACCOUNT}" --account-key "${AZURE_STORAGE_KEY}" 2>/dev/null || true
+        cd /workspace/hackathon-docs
+        az storage blob upload-batch --source "." --destination "${CONTAINER}" --account-name "${AZURE_STORAGE_ACCOUNT}" --account-key "${AZURE_STORAGE_KEY}" --max-connections 16 --overwrite true
+        az storage blob list --container-name "${CONTAINER}" --account-name "${AZURE_STORAGE_ACCOUNT}" --account-key "${AZURE_STORAGE_KEY}" --query "[].name" -o tsv | while read -r blob_name; do
+          if [ -n "$blob_name" ] && [ ! -f "$blob_name" ]; then
+            echo "🗑️  Deleting orphaned blob: $blob_name"
+            az storage blob delete --container-name "${CONTAINER}" --name "$blob_name" --account-name "${AZURE_STORAGE_ACCOUNT}" --account-key "${AZURE_STORAGE_KEY}"
+          fi
+        done
+      '

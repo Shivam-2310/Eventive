@@ -1,0 +1,60 @@
+[project]
+name = "flo-backend"
+version = "0.1.0"
+description = "Flo Companion Backend — FastAPI + SQLite + sqlite-vec + local ONNX embeddings"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "sqlalchemy>=2.0.30",
+    "alembic>=1.13.0",
+    "sqlite-vec>=0.1.6",
+    "pydantic-settings>=2.4.0",
+    "python-multipart>=0.0.9",
+    "httpx>=0.27.0",
+    "apscheduler>=3.10.0",
+    "google-genai>=1.0.0",
+    # Local ONNX-based embeddings (no PyTorch, no Gemini quota).
+    # Ships bge-small-en-v1.5 (384-dim, ~50 MB ONNX model) for CPU inference.
+    "fastembed>=0.4.0",
+    "bcrypt>=4.0.0",
+    "pyjwt>=2.9.0",
+    "sqlglot>=25.0.0",
+    "email-validator>=2.2.0",
+    # LangChain-based Ask Flo agent. Groq is the primary chat provider (fast,
+    # free tier ~30 rpm, native tool-calling on Llama-3.3-70B) with Gemini as
+    # a fallback for when the Groq key isn't set. See app/domain/ai/agent.py.
+    "langchain>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-groq>=0.2.0",
+    "langchain-google-genai>=2.0.0",
+    # Asset seeding: event cover generation + reel transcode/thumbnail extraction.
+    # imageio-ffmpeg bundles a static ffmpeg binary as a Python wheel so we do not
+    # need a system-level ffmpeg install on developer machines.
+    "pillow>=10.0.0",
+    "imageio-ffmpeg>=0.5.0",
+    "requests>=2.32.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.6.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "B008"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.uv]
+package = false

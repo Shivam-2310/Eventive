@@ -1,0 +1,45 @@
+.git
+.gitignore
+.dockerignore
+**/node_modules
+.DS_Store
+*.md
+hackathon-docs/
+backend/.venv/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+# Ship the seeded SQLite DB + media files into the image so container boot
+# doesn't need to reseed. Local scratch (WAL/SHM, backups, raw source clips,
+# e2e artefacts, tamper test fixture) stays out.
+backend/data/*
+!backend/data/flo.db
+!backend/data/events/
+!backend/data/speakers/
+!backend/data/reels/
+backend/data/reels/tamper.mp4
+backend/data/e2e/
+backend/data/7180175-hd_1080_1920_25fps/
+backend/data/*.db-shm
+backend/data/*.db-wal
+backend/data/*.db-journal
+backend/data/*.bak
+backend/.pytest_cache/
+backend/.ruff_cache/
+backend/.mypy_cache/
+backend/.test_runs/
+backend/tests/
+
+# Flutter / Dart build artifacts – always rebuilt inside the frontend-builder stage
+frontend/.dart_tool/
+frontend/.pub/
+frontend/build/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+
+# Platform folders not needed for `flutter build web`
+frontend/android/
+frontend/ios/
+frontend/macos/
+frontend/linux/
+frontend/windows/

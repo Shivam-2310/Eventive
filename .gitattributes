@@ -1,0 +1,29 @@
+# Default: treat everything as text, normalize to LF in the repo and on
+# checkout. This keeps Windows Git (autocrlf=true) and WSL/Linux Git in
+# sync and avoids the "modified in WSL but clean in PowerShell" false
+# positive when a file gets touched by an editor on one side.
+* text=auto eol=lf
+
+# Shell scripts must stay LF so Linux/WSL/macOS can execute them.
+*.sh text eol=lf
+
+# Dockerfile scripts also LF.
+docker/Dockerfile text eol=lf
+
+# Binaries never get EOL conversion.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.mov binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
