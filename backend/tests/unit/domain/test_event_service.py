@@ -141,7 +141,7 @@ def test_hydrate_event_populates_speakers_and_interests(seeded: dict, db_session
 
 
 def test_discover_returns_cards_with_all_prompts(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="disc@flo.dev", name="Disc"))
+    user = user_service.create_user(db_session, UserCreate(email="disc@eventive.dev", name="Disc"))
     cards, next_cursor = event_service.discover_cards(db_session, user.id, cursor=None, limit=3)
     assert cards, "expected at least one card"
     prompt_types = {p.prompt_type for p in cards[0].prompts}
@@ -149,7 +149,7 @@ def test_discover_returns_cards_with_all_prompts(seeded: dict, db_session) -> No
 
 
 def test_discover_pagination_cursor(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="pag@flo.dev", name="Pag"))
+    user = user_service.create_user(db_session, UserCreate(email="pag@eventive.dev", name="Pag"))
     first, cur = event_service.discover_cards(db_session, user.id, cursor=None, limit=2)
     if cur:
         second, _ = event_service.discover_cards(db_session, user.id, cursor=cur, limit=2)
@@ -162,7 +162,7 @@ def test_discover_pagination_cursor(seeded: dict, db_session) -> None:  # noqa: 
 
 
 def test_react_upsert_stays_one_row(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="react@flo.dev", name="React"))
+    user = user_service.create_user(db_session, UserCreate(email="react@eventive.dev", name="React"))
     ev = db_session.execute(select(Event).order_by(Event.id).limit(1)).scalar_one()
 
     r1 = event_service.react_to_prompt(
@@ -180,7 +180,7 @@ def test_react_upsert_stays_one_row(seeded: dict, db_session) -> None:  # noqa: 
 
 
 def test_react_invalid_prompt_type_raises(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="bad@flo.dev", name="Bad"))
+    user = user_service.create_user(db_session, UserCreate(email="bad@eventive.dev", name="Bad"))
     ev = db_session.execute(select(Event).order_by(Event.id).limit(1)).scalar_one()
     with pytest.raises(ValueError):
         event_service.react_to_prompt(
@@ -189,7 +189,7 @@ def test_react_invalid_prompt_type_raises(seeded: dict, db_session) -> None:  # 
 
 
 def test_record_interaction_valid_types(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="int@flo.dev", name="Int"))
+    user = user_service.create_user(db_session, UserCreate(email="int@eventive.dev", name="Int"))
     ev = db_session.execute(select(Event).order_by(Event.id).limit(1)).scalar_one()
     row = event_service.record_interaction(db_session, user.id, ev.id, "like")
     assert row.type == "like"
@@ -200,7 +200,7 @@ def test_record_interaction_valid_types(seeded: dict, db_session) -> None:  # no
 
 
 def test_record_interaction_invalid_type_raises(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="badint@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="badint@eventive.dev", name="X"))
     ev = db_session.execute(select(Event).order_by(Event.id).limit(1)).scalar_one()
     with pytest.raises(ValueError):
         event_service.record_interaction(db_session, user.id, ev.id, "hug")
@@ -308,7 +308,7 @@ def test_for_you_cards_returns_full_prompt_structure(seeded: dict, db_session) -
 
     user = user_service.create_user(
         db_session,
-        UserCreate(email="foryou@flo.dev", name="ForYou", blurb="loves ai"),
+        UserCreate(email="foryou@eventive.dev", name="ForYou", blurb="loves ai"),
     )
     interest_ids = [i.id for i in interest_service.list_interests(db_session)[:3]]
     interest_service.set_user_interests(db_session, user.id, interest_ids)

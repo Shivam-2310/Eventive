@@ -1,4 +1,4 @@
-"""Deterministic intent classifier for Ask Flo.
+"""Deterministic intent classifier for Ask Eventive.
 
 Rationale
 ---------
@@ -9,7 +9,7 @@ when it's clearly a **personal** question that should hit the recommendation
 engine, and "list all events" scraped through the keyword filter but the
 render was garbage.
 
-This module owns *all* routing decisions for the Ask Flo pipeline. It's
+This module owns *all* routing decisions for the Ask Eventive pipeline. It's
 deterministic, unit-testable, and covers every question the demo needs to
 answer end-to-end:
 

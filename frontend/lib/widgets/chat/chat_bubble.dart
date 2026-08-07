@@ -6,10 +6,10 @@ import '../../theme/spacing.dart';
 import 'chat_attachments.dart';
 import 'chat_entity_refs.dart';
 
-/// A single message in the Ask Flo chat.
+/// A single message in the Ask Eventive chat.
 ///
 /// The assistant bubble intentionally shows *only* prose — no `[event:5]`
-/// tokens, no debug pills. Any events / people / speakers Flo mentions are
+/// tokens, no debug pills. Any events / people / speakers Eventive mentions are
 /// rendered as compact cards below the bubble via [ChatAttachmentsRow].
 class ChatBubble extends StatelessWidget {
   final AiChatMessage message;

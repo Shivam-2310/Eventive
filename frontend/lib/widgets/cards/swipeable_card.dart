@@ -25,7 +25,7 @@ class SwipeableCard extends StatefulWidget {
   final VoidCallback? onTap;
 
   /// Label shown in the "accept" pill during a right-swipe.
-  /// Defaults preserve historical behaviour ("LIKE"); Flonnect's event deck
+  /// Defaults preserve historical behaviour ("LIKE"); EventiveConnect's event deck
   /// overrides to "SAVE" to match its save-not-like semantics.
   final String rightSwipeLabel;
 

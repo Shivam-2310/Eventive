@@ -21,7 +21,7 @@ class EmbedProvider(Protocol):
 
 @runtime_checkable
 class ChatProvider(Protocol):
-    """Chat/completion-only interface. Used by FloBot, NL2SQL, and the LLM
+    """Chat/completion-only interface. Used by EventiveBot, NL2SQL, and the LLM
     reason decorator in matching_service."""
 
     name: str

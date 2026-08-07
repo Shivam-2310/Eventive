@@ -29,8 +29,8 @@ def test_create_connection_pending(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "a@flo.dev")
-    b = _mk_user(db_session, "b@flo.dev")
+    a = _mk_user(db_session, "a@eventive.dev")
+    b = _mk_user(db_session, "b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, hook_interest_id=None)
     assert c.status == "pending"
     # calling again returns the existing row (idempotent).
@@ -42,7 +42,7 @@ def test_create_connection_self_raises(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "self@flo.dev")
+    a = _mk_user(db_session, "self@eventive.dev")
     with pytest.raises(ValueError):
         chat_service.create_connection(db_session, a.id, a.id, None)
 
@@ -51,8 +51,8 @@ def test_accept_creates_thread_and_icebreaker(db_session) -> None:  # noqa: ANN0
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "acc-a@flo.dev")
-    b = _mk_user(db_session, "acc-b@flo.dev")
+    a = _mk_user(db_session, "acc-a@eventive.dev")
+    b = _mk_user(db_session, "acc-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     updated = chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     assert updated.status == "accepted"
@@ -78,8 +78,8 @@ def test_only_receiver_can_accept(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "r1@flo.dev")
-    b = _mk_user(db_session, "r2@flo.dev")
+    a = _mk_user(db_session, "r1@eventive.dev")
+    b = _mk_user(db_session, "r2@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     with pytest.raises(PermissionError):
         chat_service.update_connection_status(db_session, a.id, c.id, "accepted")
@@ -89,8 +89,8 @@ def test_invalid_status_raises(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "s1@flo.dev")
-    b = _mk_user(db_session, "s2@flo.dev")
+    a = _mk_user(db_session, "s1@eventive.dev")
+    b = _mk_user(db_session, "s2@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     with pytest.raises(ValueError):
         chat_service.update_connection_status(db_session, b.id, c.id, "banana")
@@ -100,8 +100,8 @@ def test_post_message_writes_row(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "m1@flo.dev")
-    b = _mk_user(db_session, "m2@flo.dev")
+    a = _mk_user(db_session, "m1@eventive.dev")
+    b = _mk_user(db_session, "m2@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
@@ -114,8 +114,8 @@ def test_post_message_invalid_kind_raises(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "k1@flo.dev")
-    b = _mk_user(db_session, "k2@flo.dev")
+    a = _mk_user(db_session, "k1@eventive.dev")
+    b = _mk_user(db_session, "k2@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
@@ -127,13 +127,13 @@ def test_is_participant(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "p1@flo.dev")
-    b = _mk_user(db_session, "p2@flo.dev")
+    a = _mk_user(db_session, "p1@eventive.dev")
+    b = _mk_user(db_session, "p2@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
     assert chat_service.is_participant(db_session, thread.id, a.id) is True
-    other = _mk_user(db_session, "other@flo.dev")
+    other = _mk_user(db_session, "other@eventive.dev")
     assert chat_service.is_participant(db_session, thread.id, other.id) is False
 
 
@@ -141,8 +141,8 @@ def test_attend_together_flow_rsvps_both(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "at-a@flo.dev")
-    b = _mk_user(db_session, "at-b@flo.dev")
+    a = _mk_user(db_session, "at-a@eventive.dev")
+    b = _mk_user(db_session, "at-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
@@ -168,8 +168,8 @@ def test_attend_together_missing_event_raises(db_session) -> None:  # noqa: ANN0
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "mt-a@flo.dev")
-    b = _mk_user(db_session, "mt-b@flo.dev")
+    a = _mk_user(db_session, "mt-a@eventive.dev")
+    b = _mk_user(db_session, "mt-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
@@ -181,8 +181,8 @@ def test_message_to_dict_parses_payload_json(db_session) -> None:  # noqa: ANN00
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "md-a@flo.dev")
-    b = _mk_user(db_session, "md-b@flo.dev")
+    a = _mk_user(db_session, "md-a@eventive.dev")
+    b = _mk_user(db_session, "md-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
@@ -196,8 +196,8 @@ def test_list_threads_for_user(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "lt-a@flo.dev")
-    b = _mk_user(db_session, "lt-b@flo.dev")
+    a = _mk_user(db_session, "lt-a@eventive.dev")
+    b = _mk_user(db_session, "lt-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
 
@@ -211,8 +211,8 @@ def test_list_connections_by_user(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "lc-a@flo.dev")
-    b = _mk_user(db_session, "lc-b@flo.dev")
+    a = _mk_user(db_session, "lc-a@eventive.dev")
+    b = _mk_user(db_session, "lc-b@eventive.dev")
     conn = chat_service.create_connection(db_session, a.id, b.id, None)
     rows = chat_service.list_connections(db_session, a.id)
     assert any(r.id == conn.id for r in rows)
@@ -222,8 +222,8 @@ def test_attend_together_accept_wrong_message_id_raises(db_session) -> None:  # 
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "w-a@flo.dev")
-    b = _mk_user(db_session, "w-b@flo.dev")
+    a = _mk_user(db_session, "w-a@eventive.dev")
+    b = _mk_user(db_session, "w-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()
@@ -236,8 +236,8 @@ def test_existing_connection_returned_across_reverse_pair(db_session) -> None:  
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "rv-a@flo.dev")
-    b = _mk_user(db_session, "rv-b@flo.dev")
+    a = _mk_user(db_session, "rv-a@eventive.dev")
+    b = _mk_user(db_session, "rv-b@eventive.dev")
     forward = chat_service.create_connection(db_session, a.id, b.id, None)
     reverse = chat_service.create_connection(db_session, b.id, a.id, None)
     assert forward.id == reverse.id
@@ -256,8 +256,8 @@ def test_post_message_payload_json_roundtrip_serialized(db_session) -> None:  # 
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "json-a@flo.dev")
-    b = _mk_user(db_session, "json-b@flo.dev")
+    a = _mk_user(db_session, "json-a@eventive.dev")
+    b = _mk_user(db_session, "json-b@eventive.dev")
     c = chat_service.create_connection(db_session, a.id, b.id, None)
     chat_service.update_connection_status(db_session, b.id, c.id, "accepted")
     thread = db_session.execute(select(ChatThread).where(ChatThread.connection_id == c.id)).scalar_one()

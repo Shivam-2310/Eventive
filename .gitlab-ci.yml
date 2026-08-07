@@ -82,7 +82,7 @@ build_and_deploy:
   #   ADMIN_EMAIL              (var)     — REQUIRED; email for the seeded admin login
   #   ADMIN_INITIAL_PASSWORD   (masked)  — REQUIRED; password for the seeded admin login
   #   MEDIA_SIGNING_SECRET     (masked)  — optional; must match the value used
-  #                                        when the shipped backend/data/flo.db was
+  #                                        when the shipped backend/data/eventive.db was
   #                                        generated (defaults to `dev-media-secret`
   #                                        both in ARM and in app.infra.config).
 

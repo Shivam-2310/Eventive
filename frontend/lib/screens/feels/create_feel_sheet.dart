@@ -110,7 +110,7 @@ class _CreateFeelSheetState extends State<CreateFeelSheet> {
           ),
           const SizedBox(height: 6),
           Text(
-            'Share a moment from Flo. Up to ~10s vertical video.',
+            'Share a moment from Eventive. Up to ~10s vertical video.',
             style: TextStyle(fontSize: 13, color: AppColors.textTertiary),
           ),
           const SizedBox(height: 20),

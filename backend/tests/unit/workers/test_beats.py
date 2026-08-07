@@ -74,7 +74,7 @@ def test_rsvp_fires_10min_alarm(seeded, db_session, monkeypatch) -> None:  # noq
     """Event 5 min out + RSVP → single 'Starting soon' push."""
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="rsvp10@flo.dev", name="R"))
+    user = user_service.create_user(db_session, UserCreate(email="rsvp10@eventive.dev", name="R"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Alarm", track="AI", status="scheduled", start_time=now + timedelta(minutes=5))
     db_session.add(ev)
@@ -95,7 +95,7 @@ def test_rsvp_fires_30min_headsup(seeded, db_session, monkeypatch) -> None:  # n
     """Event 20 min out + RSVP → 'Get ready' heads-up (only)."""
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="rsvp30@flo.dev", name="R"))
+    user = user_service.create_user(db_session, UserCreate(email="rsvp30@eventive.dev", name="R"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="HeadsUp", track="AI", status="scheduled", start_time=now + timedelta(minutes=20))
     db_session.add(ev)
@@ -118,7 +118,7 @@ def test_rsvp_fires_both_pushes_across_windows(seeded, db_session, monkeypatch) 
     """
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="rsvpboth@flo.dev", name="R"))
+    user = user_service.create_user(db_session, UserCreate(email="rsvpboth@eventive.dev", name="R"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Both", track="AI", status="scheduled", start_time=now + timedelta(minutes=20))
     db_session.add(ev)
@@ -148,7 +148,7 @@ def test_save_only_fires_soft_nudge_10min(seeded, db_session, monkeypatch) -> No
     """Save (without RSVP) → 'Still want to catch...?' 10-min reminder."""
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="save@flo.dev", name="S"))
+    user = user_service.create_user(db_session, UserCreate(email="save@eventive.dev", name="S"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Nudged", track="AI", status="scheduled", start_time=now + timedelta(minutes=5))
     db_session.add(ev)
@@ -172,7 +172,7 @@ def test_save_gets_no_30min_headsup(seeded, db_session, monkeypatch) -> None:  #
     """
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="saveonly30@flo.dev", name="S"))
+    user = user_service.create_user(db_session, UserCreate(email="saveonly30@eventive.dev", name="S"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Faraway", track="AI", status="scheduled", start_time=now + timedelta(minutes=20))
     db_session.add(ev)
@@ -193,7 +193,7 @@ def test_rsvp_suppresses_save_nudge(seeded, db_session, monkeypatch) -> None:  #
     """
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="both@flo.dev", name="B"))
+    user = user_service.create_user(db_session, UserCreate(email="both@eventive.dev", name="B"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Overlap", track="AI", status="scheduled", start_time=now + timedelta(minutes=5))
     db_session.add(ev)
@@ -221,7 +221,7 @@ def test_like_alone_fires_nothing(seeded, db_session, monkeypatch) -> None:  # n
     """
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="like@flo.dev", name="L"))
+    user = user_service.create_user(db_session, UserCreate(email="like@eventive.dev", name="L"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Silent", track="AI", status="scheduled", start_time=now + timedelta(minutes=5))
     db_session.add(ev)
@@ -243,7 +243,7 @@ def test_event_starting_soon_dedupes_per_process(seeded, db_session, monkeypatch
     """Second call within the same window must not push a duplicate."""
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="dd@flo.dev", name="B"))
+    user = user_service.create_user(db_session, UserCreate(email="dd@eventive.dev", name="B"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     ev = Event(title="Once", track="AI", status="scheduled", start_time=now + timedelta(minutes=3))
     db_session.add(ev)
@@ -264,7 +264,7 @@ def test_event_starting_soon_ignores_events_outside_window(seeded, db_session, m
     """Events > 30 min out or already in the past must not trigger anything."""
     from app.workers import beats
 
-    user = user_service.create_user(db_session, UserCreate(email="w@flo.dev", name="B"))
+    user = user_service.create_user(db_session, UserCreate(email="w@eventive.dev", name="B"))
     now = datetime(2026, 7, 11, 9, 0, 0)
     later = Event(title="Later", track="AI", status="scheduled", start_time=now + timedelta(hours=2))
     past = Event(title="Past", track="AI", status="scheduled", start_time=now - timedelta(hours=2))

@@ -51,7 +51,7 @@ def seed_all() -> dict[str, int]:
         stats["reels"] = _seed_reels(db)
         if settings.SEED_DEMO_FIXTURES:
             stats["demo_users"] = _seed_demo(db)
-        # Warm up vector + RAG indexes so recommendations / Ask Flo work out of the box.
+        # Warm up vector + RAG indexes so recommendations / Ask Eventive work out of the box.
         # Uses the currently-configured LLMProvider (stub by default -> free + deterministic).
         try:
             emb_stats = emb_worker.backfill_all(db)
@@ -77,7 +77,7 @@ def _seed_admin(db, email: str, password: str) -> int:
         return 0
     admin = user_service.create_user(
         db,
-        UserCreate(email=email, name="Flo Admin", is_admin=True),
+        UserCreate(email=email, name="Eventive Admin", is_admin=True),
     )
     admin.is_admin = True
     admin.password_hash = hash_password(password)
@@ -213,21 +213,21 @@ def _seed_demo(db) -> int:
         return 0
     alice = user_service.create_user(
         db,
-        UserCreate(email="alice@flo.dev", name="Alice", headline="AI Engineer", role="ML Engineer", timezone="UTC"),
+        UserCreate(email="alice@eventive.dev", name="Alice", headline="AI Engineer", role="ML Engineer", timezone="UTC"),
     )
     bob = user_service.create_user(
         db,
-        UserCreate(email="bob@flo.dev", name="Bob", headline="Founder in GenAI", role="Founder", timezone="UTC"),
+        UserCreate(email="bob@eventive.dev", name="Bob", headline="Founder in GenAI", role="Founder", timezone="UTC"),
     )
     carol = user_service.create_user(
         db,
         UserCreate(
-            email="carol@flo.dev", name="Carol", headline="Backend + agents", role="Backend Engineer", timezone="UTC"
+            email="carol@eventive.dev", name="Carol", headline="Backend + agents", role="Backend Engineer", timezone="UTC"
         ),
     )
     # Give every demo user the same password so the sign-in screen can pick
     # any of them to test the seeded connections / notifications / prompt reactions.
-    demo_password = "flo1234"
+    demo_password = "eventive1234"
     for u in (alice, bob, carol):
         u.password_hash = hash_password(demo_password)
     db.commit()
@@ -271,7 +271,7 @@ def _seed_demo(db) -> int:
             Notification(
                 user_id=uid,
                 type="welcome",
-                title="Welcome to Flo",
+                title="Welcome to Eventive",
                 body="Explore the AI track and swipe on some event cards to get personalized picks.",
                 deep_link="/events/discover",
             )

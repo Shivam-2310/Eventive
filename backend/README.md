@@ -1,6 +1,6 @@
-# Flo Companion Backend
+# Eventive Companion Backend
 
-FastAPI + SQLite (WAL + `sqlite-vec`) backend for the Flo event-companion hackathon build.
+FastAPI + SQLite (WAL + `sqlite-vec`) backend for the Eventive event-companion hackathon build.
 
 All development is done **inside WSL Ubuntu 22.04** (production is Linux, `sqlite-vec` is
 Linux-only, and Alembic/SQLite/ffmpeg behave identically to the container).
@@ -27,8 +27,8 @@ Then open `http://localhost:8000/docs` in your Windows browser.
 ## Docker (mirrors prod)
 
 ```bash
-docker build -f docker/Dockerfile -t flo-backend .
-docker run --rm -p 8080:80 --env-file backend/.env flo-backend
+docker build -f docker/Dockerfile -t eventive-backend .
+docker run --rm -p 8080:80 --env-file backend/.env eventive-backend
 curl localhost:8080/healthz
 ```
 
@@ -59,7 +59,7 @@ See [.env.example](.env.example) for the full list. The interesting ones:
 
 | Var | Default | Meaning |
 | --- | --- | --- |
-| `DATABASE_URL` | `sqlite:///./data/flo.db` | SQLite path |
+| `DATABASE_URL` | `sqlite:///./data/eventive.db` | SQLite path |
 | `DATA_DIR` | `./data` | where reels + uploads land |
 | `LLM_PROVIDER` | `stub` | `stub` (deterministic fake) or `gemini` |
 | `GEMINI_API_KEY` | *(empty)* | required only when `LLM_PROVIDER=gemini` |

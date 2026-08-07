@@ -7,7 +7,7 @@ import '../../../services/services.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/radius.dart';
 
-/// Chronological list row used by the "All Events" tab on Flonnect.
+/// Chronological list row used by the "All Events" tab on EventiveConnect.
 ///
 /// Design brief: match the rest of the app's list surfaces (My Activity,
 /// Profile, etc.) instead of a Hinge-style full-bleed card. That means a

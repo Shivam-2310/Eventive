@@ -175,7 +175,7 @@ class _FeelCardState extends State<FeelCard> {
                       Text(
                         widget.item.reel.caption?.isNotEmpty == true
                             ? widget.item.reel.caption!
-                            : 'A moment from Flo',
+                            : 'A moment from Eventive',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,

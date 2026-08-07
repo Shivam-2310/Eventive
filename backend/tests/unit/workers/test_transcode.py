@@ -16,7 +16,7 @@ def _seed_reel(db_session, storage_key: str = "reels/raw.mp4") -> Reel:  # noqa:
     from app.schemas.user import UserCreate
 
     ensure_schema()
-    u = user_service.create_user(db_session, UserCreate(email="reel-owner@flo.dev", name="U"))
+    u = user_service.create_user(db_session, UserCreate(email="reel-owner@eventive.dev", name="U"))
     # write a real file at the raw storage key so process_reel doesn't reject on missing file.
     blob_store.save_bytes(b"\x00\x00\x00fake", storage_key)
     r = Reel(user_id=u.id, status="processing", storage_key=storage_key)
@@ -121,7 +121,7 @@ def test_process_reel_missing_raw_file(db_session, monkeypatch: pytest.MonkeyPat
     from app.workers import transcode
 
     ensure_schema()
-    u = user_service.create_user(db_session, UserCreate(email="missing@flo.dev", name="U"))
+    u = user_service.create_user(db_session, UserCreate(email="missing@eventive.dev", name="U"))
     reel = Reel(user_id=u.id, status="processing", storage_key="reels/does-not-exist.mp4")
     db_session.add(reel)
     db_session.commit()

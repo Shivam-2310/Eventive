@@ -11,7 +11,7 @@ def test_defaults_match_env_example(monkeypatch: pytest.MonkeyPatch) -> None:
     get_settings.cache_clear()
     s = get_settings()
     assert s.LLM_PROVIDER == "stub"
-    assert s.ADMIN_EMAIL == "admin@flo.dev"
+    assert s.ADMIN_EMAIL == "admin@eventive.dev"
     assert s.PORT == 8000
     assert s.MEDIA_URL_TTL_SECONDS == 600
     # DATABASE_URL / DATA_DIR are overridden by _isolated_env for hermetic tests.

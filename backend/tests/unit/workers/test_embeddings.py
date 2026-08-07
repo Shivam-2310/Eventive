@@ -38,7 +38,7 @@ def test_embed_missing_returns_false(db_session) -> None:  # noqa: ANN001
 
 
 def test_embed_user_profile_uses_interests_when_present(seeded, db_session) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="up@flo.dev", name="U", blurb="hi"))
+    user = user_service.create_user(db_session, UserCreate(email="up@eventive.dev", name="U", blurb="hi"))
     interest = interest_service.list_interests(db_session)[0]
     interest_service.set_user_interests(db_session, user.id, [interest.id])
     ok = emb_worker.embed_user_profile(db_session, user.id)
@@ -55,7 +55,7 @@ def test_embed_user_profile_no_interests_uses_name_headline(db_session) -> None:
 
     ensure_schema()
     user = user_service.create_user(
-        db_session, UserCreate(email="fb@flo.dev", name="Fallback", headline="Head", role="Role")
+        db_session, UserCreate(email="fb@eventive.dev", name="Fallback", headline="Head", role="Role")
     )
     ok = emb_worker.embed_user_profile(db_session, user.id)
     assert ok is True

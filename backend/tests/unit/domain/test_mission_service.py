@@ -36,7 +36,7 @@ def test_create_mission_persists_and_lists(db_session) -> None:  # noqa: ANN001
 
 def test_like_events_rule_increments(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
     """Under seed the 'like_events' mission target is 5; simulating 5 likes completes it."""
-    user = _mk_user(db_session, "like@flo.dev")
+    user = _mk_user(db_session, "like@eventive.dev")
     events = db_session.execute(select(Event).order_by(Event.id).limit(5)).scalars().all()
     for ev in events:
         db_session.add(EventInteraction(user_id=user.id, event_id=ev.id, type="like"))
@@ -52,7 +52,7 @@ def test_like_events_rule_increments(seeded: dict, db_session) -> None:  # noqa:
 
 
 def test_mission_completed_pushes_notification(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _mk_user(db_session, "mn@flo.dev")
+    user = _mk_user(db_session, "mn@eventive.dev")
     events = db_session.execute(select(Event).order_by(Event.id).limit(5)).scalars().all()
     for ev in events:
         db_session.add(EventInteraction(user_id=user.id, event_id=ev.id, type="like"))
@@ -66,7 +66,7 @@ def test_mission_completed_pushes_notification(seeded: dict, db_session) -> None
 
 
 def test_progress_stored_as_json_string(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _mk_user(db_session, "prog@flo.dev")
+    user = _mk_user(db_session, "prog@eventive.dev")
     db_session.add(EventInteraction(user_id=user.id, event_id=1, type="like"))
     db_session.commit()
 
@@ -81,14 +81,14 @@ def test_progress_stored_as_json_string(seeded: dict, db_session) -> None:  # no
 
 
 def test_make_connections_rule_uses_accepted_only(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _mk_user(db_session, "conn@flo.dev")
+    user = _mk_user(db_session, "conn@eventive.dev")
     for i in range(3):
-        other = _mk_user(db_session, f"other-{i}@flo.dev")
+        other = _mk_user(db_session, f"other-{i}@eventive.dev")
         db_session.add(
             Connection(requester_id=user.id, receiver_id=other.id, status="accepted")
         )
     # one pending doesn't count
-    other = _mk_user(db_session, "pending@flo.dev")
+    other = _mk_user(db_session, "pending@eventive.dev")
     db_session.add(Connection(requester_id=user.id, receiver_id=other.id, status="pending"))
     db_session.commit()
 
@@ -106,7 +106,7 @@ def test_make_connections_rule_uses_accepted_only(seeded: dict, db_session) -> N
 
 
 def test_list_user_progress_shape(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _mk_user(db_session, "lu@flo.dev")
+    user = _mk_user(db_session, "lu@eventive.dev")
     rows = mission_service.list_user_progress(db_session, user.id)
     assert rows
     # Each row is (Mission, UserMissionProgress|None).

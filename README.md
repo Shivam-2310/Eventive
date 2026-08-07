@@ -1,18 +1,18 @@
-# Flo — AI-Powered Event Companion
+# Eventive — AI-Powered Event Companion
 
-Flo is a modern event companion platform designed to enhance the attendee experience before, during, and after events. Built with **Flutter**, **FastAPI**, **LangChain**, and **SQLite**, the platform combines AI-powered recommendations, event discovery, networking, and conversational assistance into a single application.
+Eventive is a modern event companion platform designed to enhance the attendee experience before, during, and after events. Built with **Flutter**, **FastAPI**, **LangChain**, and **SQLite**, the platform combines AI-powered recommendations, event discovery, networking, and conversational assistance into a single application.
 
 ---
 
 # Overview
 
-Flo complements an existing event management platform by providing intelligent attendee-focused experiences.
+Eventive complements an existing event management platform by providing intelligent attendee-focused experiences.
 
 The application consists of three primary modules:
 
 - **Feels** — Community-created short event reels.
-- **Flonnect** — AI-powered networking and event discovery.
-- **Ask Flo** — Conversational AI assistant capable of answering questions about events, schedules, recommendations, and user-specific information.
+- **EventiveConnect** — AI-powered networking and event discovery.
+- **Ask Eventive** — Conversational AI assistant capable of answering questions about events, schedules, recommendations, and user-specific information.
 
 Additional features include:
 
@@ -48,7 +48,7 @@ Additional features include:
 # Repository Structure
 
 ```
-flo/
+eventive/
 ├── backend/
 │   ├── app/
 │   │   ├── api/
@@ -234,7 +234,7 @@ Create a `.env` file using `.env.example`.
 | MEDIA_SIGNING_SECRET | Media URL signing |
 | FRONTEND_WEB_DIR | Flutter build directory |
 
-If no LLM API keys are configured, Ask Flo automatically switches to the built-in RAG and database retrieval pipeline.
+If no LLM API keys are configured, Ask Eventive automatically switches to the built-in RAG and database retrieval pipeline.
 
 ---
 
@@ -261,7 +261,7 @@ Build:
 ```bash
 docker build \
     -f docker/Dockerfile \
-    -t flo .
+    -t eventive .
 ```
 
 Run:
@@ -270,7 +270,7 @@ Run:
 docker run \
     --rm \
     -p 8000:8000 \
-    flo
+    eventive
 ```
 
 The backend and Flutter web application are served from:

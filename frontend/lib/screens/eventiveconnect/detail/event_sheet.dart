@@ -432,7 +432,7 @@ class _EventDetailSheetState extends State<EventDetailSheet> {
   }
 
   /// Section header for "Session highlights" — a title on the left, a small
-  /// inline text button on the right that lets Flo rewrite the vibe line.
+  /// inline text button on the right that lets Eventive rewrite the vibe line.
   /// The vibe rewrite is contextual to this section (it changes the "Vibe"
   /// highlight tile), so it lives here rather than competing with the
   /// primary Save / RSVP / Attended actions at the top.
@@ -448,7 +448,7 @@ class _EventDetailSheetState extends State<EventDetailSheet> {
 
   Widget _refreshVibeInline() {
     return Tooltip(
-      message: 'Ask Flo to rewrite the vibe line using its latest signals.',
+      message: 'Ask Eventive to rewrite the vibe line using its latest signals.',
       waitDuration: const Duration(milliseconds: 300),
       child: Material(
         color: Colors.transparent,
@@ -635,7 +635,7 @@ class _EventDetailSheetState extends State<EventDetailSheet> {
         return _PromptTileView(
           header: 'VIBE',
           body: body.isEmpty
-              ? 'Tap “Refresh vibe” for a Flo-generated line.'
+              ? 'Tap “Refresh vibe” for a Eventive-generated line.'
               : body,
           dimmed: body.isEmpty,
         );
@@ -1197,7 +1197,7 @@ const List<_ActionSpec> _actionSpecs = [
     tooltip:
         "Commit to attending — we'll ping you 30 min and 10 min before it starts.",
     idleHint:
-        "Tap 'I'm going' to commit — Flo will ping you 30 min and again 10 min before it starts.",
+        "Tap 'I'm going' to commit — Eventive will ping you 30 min and again 10 min before it starts.",
     selectedHint:
         "You're locked in. Reminders queued for 30 min and 10 min before start.",
     confirmedCopy: "You're going — reminders queued.",
@@ -1211,7 +1211,7 @@ const List<_ActionSpec> _actionSpecs = [
     tooltip:
         "Bookmark for later. We'll send one gentle nudge 10 min before it starts.",
     idleHint:
-        "Not sure yet? Save it — Flo will nudge you once, 10 min before it starts.",
+        "Not sure yet? Save it — Eventive will nudge you once, 10 min before it starts.",
     selectedHint: "Saved. We'll nudge you 10 min before it starts.",
     confirmedCopy: 'Saved — nudge queued.',
     removedCopy: 'Removed from Saved.',

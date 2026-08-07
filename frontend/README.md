@@ -1,4 +1,4 @@
-# flo_app
+# eventive_app
 
 A new Flutter project.
 

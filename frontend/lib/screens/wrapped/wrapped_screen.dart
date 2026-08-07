@@ -92,7 +92,7 @@ class _WrappedScreenState extends State<WrappedScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Your Flo journey',
+                'Your Eventive journey',
                 style: GoogleFonts.plusJakartaSans(
                   fontSize: 24,
                   fontWeight: FontWeight.w800,

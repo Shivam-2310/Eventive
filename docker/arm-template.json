@@ -45,7 +45,7 @@
     },
     "adminEmail": {
       "type": "string",
-      "defaultValue": "admin@flo.dev"
+      "defaultValue": "admin@eventive.dev"
     },
     "adminInitialPassword": {
       "type": "securestring",
@@ -55,7 +55,7 @@
       "type": "securestring",
       "defaultValue": "dev-media-secret",
       "metadata": {
-        "description": "HMAC secret for signed /media/blob URLs. Must match the secret in effect when the shipped flo.db was generated (defaults to `dev-media-secret`, which is also the built-in Settings default)."
+        "description": "HMAC secret for signed /media/blob URLs. Must match the secret in effect when the shipped eventive.db was generated (defaults to `dev-media-secret`, which is also the built-in Settings default)."
       }
     }
   },

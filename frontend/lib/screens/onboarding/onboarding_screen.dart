@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const _intros = [
     _IntroPage(
       icon: Icons.people_rounded,
-      title: 'Flonnect',
+      title: 'EventiveConnect',
       subtitle: 'Discover people who share your vibe.\nNetworking, but make it fun.',
       gradientColors: [Color(0xFF14B8A6), Color(0xFF06B6D4)],
     ),
@@ -49,8 +49,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     _IntroPage(
       icon: Icons.auto_awesome,
-      title: 'Ask Flo Bot',
-      subtitle: 'Your AI guide to everything Flo.\nSchedules, tips, recs — just ask.',
+      title: 'Ask Eventive Bot',
+      subtitle: 'Your AI guide to everything Eventive.\nSchedules, tips, recs — just ask.',
       gradientColors: [Color(0xFF0EA5E9), Color(0xFF38BDF8)],
     ),
   ];
@@ -293,7 +293,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           colors: AppColors.accentGradient,
         ).createShader(bounds),
         child: Text(
-          'flo',
+          'eventive',
           style: GoogleFonts.plusJakartaSans(
             fontSize: 24,
             fontWeight: FontWeight.w800,
@@ -415,7 +415,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         _labelledField(
           label: 'Company',
           controller: _companyCtrl,
-          hint: 'Flo Labs',
+          hint: 'Eventive Labs',
         ),
         const SizedBox(height: 20),
         Center(

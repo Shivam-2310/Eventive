@@ -133,13 +133,13 @@ def test_recommend_people_prefers_interest_sharers(seeded: dict, db_session) -> 
     from app.schemas.user import UserCreate
 
     seeker = user_service.create_user(
-        db_session, UserCreate(email="seeker@flo.dev", name="Seeker", blurb="likes ai")
+        db_session, UserCreate(email="seeker@eventive.dev", name="Seeker", blurb="likes ai")
     )
     sharer = user_service.create_user(
-        db_session, UserCreate(email="sharer@flo.dev", name="Sharer", blurb="ml eng")
+        db_session, UserCreate(email="sharer@eventive.dev", name="Sharer", blurb="ml eng")
     )
     stranger = user_service.create_user(
-        db_session, UserCreate(email="stranger@flo.dev", name="Stranger", blurb="ml eng")
+        db_session, UserCreate(email="stranger@eventive.dev", name="Stranger", blurb="ml eng")
     )
 
     interest_id = db_session.execute(select(Interest.id).limit(1)).scalar_one()
@@ -163,7 +163,7 @@ def test_recommend_people_falls_back_to_vec_when_no_interests(seeded: dict, db_s
     from app.schemas.user import UserCreate
 
     ghost = user_service.create_user(
-        db_session, UserCreate(email="ghost@flo.dev", name="Ghost", blurb="hello")
+        db_session, UserCreate(email="ghost@eventive.dev", name="Ghost", blurb="hello")
     )
     out = matching_service.recommend_people(db_session, ghost.id, k=10)
     assert isinstance(out, list)
@@ -178,10 +178,10 @@ def test_recommend_people_reasons_mention_shared_when_present(seeded: dict, db_s
     from app.schemas.user import UserCreate
 
     me = user_service.create_user(
-        db_session, UserCreate(email="me@flo.dev", name="Me", blurb="hi")
+        db_session, UserCreate(email="me@eventive.dev", name="Me", blurb="hi")
     )
     peer = user_service.create_user(
-        db_session, UserCreate(email="peer@flo.dev", name="Peer", blurb="hi")
+        db_session, UserCreate(email="peer@eventive.dev", name="Peer", blurb="hi")
     )
     interest = db_session.execute(select(Interest).limit(1)).scalar_one()
     interest_service.set_user_interests(db_session, me.id, [interest.id])

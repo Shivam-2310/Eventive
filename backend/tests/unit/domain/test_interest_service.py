@@ -9,7 +9,7 @@ from app.models.interest import Interest, UserInterest
 from app.schemas.user import UserCreate
 
 
-def _make_user(db, email: str = "u@flo.dev") -> object:  # noqa: ANN001
+def _make_user(db, email: str = "u@eventive.dev") -> object:  # noqa: ANN001
     return user_service.create_user(db, UserCreate(email=email, name="U"))
 
 
@@ -39,7 +39,7 @@ def test_create_free_text_interest_marks_not_predefined(db_session) -> None:  # 
 
 
 def test_set_user_interests_replaces_and_writes_blurb(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _make_user(db_session, email="ui-test@flo.dev")
+    user = _make_user(db_session, email="ui-test@eventive.dev")
     interests = interest_service.list_interests(db_session, category="topic")[:3]
     interest_ids = [i.id for i in interests]
 
@@ -58,14 +58,14 @@ def test_set_user_interests_replaces_and_writes_blurb(seeded: dict, db_session) 
 
 
 def test_set_user_interests_ignores_unknown_interest_ids(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _make_user(db_session, email="ignore-unknown@flo.dev")
+    user = _make_user(db_session, email="ignore-unknown@eventive.dev")
     real_id = interest_service.list_interests(db_session)[0].id
     rows = interest_service.set_user_interests(db_session, user.id, [real_id, 999_999])
     assert len(rows) == 1
 
 
 def test_set_user_interests_default_weight_is_one(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _make_user(db_session, email="weight@flo.dev")
+    user = _make_user(db_session, email="weight@eventive.dev")
     real_id = interest_service.list_interests(db_session)[0].id
     interest_service.set_user_interests(db_session, user.id, [real_id])
     ui = db_session.execute(
@@ -89,7 +89,7 @@ def test_set_user_interests_missing_user_raises() -> None:
 
 
 def test_get_user_interests_returns_pairs(seeded: dict, db_session) -> None:  # noqa: ANN001, ARG001
-    user = _make_user(db_session, email="pairs@flo.dev")
+    user = _make_user(db_session, email="pairs@eventive.dev")
     real_ids = [i.id for i in interest_service.list_interests(db_session)[:2]]
     interest_service.set_user_interests(db_session, user.id, real_ids)
     pairs = interest_service.get_user_interests(db_session, user.id)
@@ -123,7 +123,7 @@ def test_set_user_interests_refreshes_vec_row(seeded: dict, db_session) -> None:
     """
     from sqlalchemy import text as sql_text
 
-    user = _make_user(db_session, email="reembed@flo.dev")
+    user = _make_user(db_session, email="reembed@eventive.dev")
     interests = interest_service.list_interests(db_session, category="topic")
     assert len(interests) >= 2
 
@@ -158,7 +158,7 @@ def test_set_user_interests_reembed_failure_is_swallowed(seeded: dict, db_sessio
 
     monkeypatch.setattr(emb_worker, "embed_user_profile", _boom)
 
-    user = _make_user(db_session, email="reembed-swallow@flo.dev")
+    user = _make_user(db_session, email="reembed-swallow@eventive.dev")
     real_id = interest_service.list_interests(db_session)[0].id
     rows = interest_service.set_user_interests(db_session, user.id, [real_id])
     assert len(rows) == 1

@@ -1,4 +1,4 @@
-"""One-shot: checkpoint WAL into flo.db and strip the localhost prefix from
+"""One-shot: checkpoint WAL into eventive.db and strip the localhost prefix from
 `speaker.headshot_url` and `event.cover_image_url` so the same DB works in any
 deployment (Flutter web is served same-origin as the API in prod, so a relative
 `/media/blob?...` URL resolves correctly).
@@ -9,13 +9,13 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-DB = Path(__file__).resolve().parent / "data" / "flo.db"
+DB = Path(__file__).resolve().parent / "data" / "eventive.db"
 PREFIX = "http://localhost:8000"
 
 
 def main() -> None:
     if not DB.is_file():
-        raise SystemExit(f"flo.db not found at {DB}")
+        raise SystemExit(f"eventive.db not found at {DB}")
 
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row

@@ -25,7 +25,7 @@ def main() -> int:
         if not admin:
             admin = user_service.create_user(
                 db,
-                UserCreate(email=settings.ADMIN_EMAIL, name="Flo Admin", is_admin=True),
+                UserCreate(email=settings.ADMIN_EMAIL, name="Eventive Admin", is_admin=True),
             )
         admin.is_admin = True
         admin.password_hash = hash_password(settings.ADMIN_INITIAL_PASSWORD)

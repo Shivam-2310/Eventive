@@ -8,8 +8,8 @@ os.environ.setdefault("LLM_PROVIDER", "stub")
 
 
 def _bootstrap_isolated_db() -> None:
-    tmp = tempfile.mkdtemp(prefix="flo_auth_test_")
-    os.environ["DATABASE_URL"] = f"sqlite:///{tmp}/flo.db"
+    tmp = tempfile.mkdtemp(prefix="eventive_auth_test_")
+    os.environ["DATABASE_URL"] = f"sqlite:///{tmp}/eventive.db"
     os.environ["DATA_DIR"] = tmp
     os.environ["SEED_DEMO_FIXTURES"] = "false"
 
@@ -34,7 +34,7 @@ def test_auth_full_flow() -> None:
     r = client.post(
         "/auth/register",
         json={
-            "email": "alice.auth@flo.dev",
+            "email": "alice.auth@eventive.dev",
             "password": "hunter2!",
             "name": "Alice Auth",
             "headline": "AI engineer",
@@ -45,7 +45,7 @@ def test_auth_full_flow() -> None:
     assert pair["token_type"] == "bearer"
     assert pair["access_token"]
     assert pair["refresh_token"] != pair["access_token"]
-    assert pair["user"]["email"] == "alice.auth@flo.dev"
+    assert pair["user"]["email"] == "alice.auth@eventive.dev"
     assert pair["user"]["id"] > 0
 
     # Regression: `/auth/register` MUST synchronously populate the new user's
@@ -68,7 +68,7 @@ def test_auth_full_flow() -> None:
     # duplicate email is rejected
     r_dup = client.post(
         "/auth/register",
-        json={"email": "alice.auth@flo.dev", "password": "hunter2!", "name": "Dup"},
+        json={"email": "alice.auth@eventive.dev", "password": "hunter2!", "name": "Dup"},
     )
     assert r_dup.status_code == 409
 
@@ -79,7 +79,7 @@ def test_auth_full_flow() -> None:
     # --- me works with the fresh token ---
     r = client.get("/auth/me", headers=auth_headers)
     assert r.status_code == 200
-    assert r.json()["email"] == "alice.auth@flo.dev"
+    assert r.json()["email"] == "alice.auth@eventive.dev"
 
     # --- me fails without a token ---
     assert client.get("/auth/me").status_code == 401
@@ -93,7 +93,7 @@ def test_auth_full_flow() -> None:
     # --- login works with the same credentials ---
     r = client.post(
         "/auth/login",
-        json={"email": "alice.auth@flo.dev", "password": "hunter2!"},
+        json={"email": "alice.auth@eventive.dev", "password": "hunter2!"},
     )
     assert r.status_code == 200
     logged_in = r.json()
@@ -102,7 +102,7 @@ def test_auth_full_flow() -> None:
     # --- login fails with the wrong password ---
     r = client.post(
         "/auth/login",
-        json={"email": "alice.auth@flo.dev", "password": "wrong"},
+        json={"email": "alice.auth@eventive.dev", "password": "wrong"},
     )
     assert r.status_code == 401
 
@@ -127,10 +127,10 @@ def test_auth_full_flow() -> None:
 
     # --- login twice, then logout-all revokes both ---
     a = client.post(
-        "/auth/login", json={"email": "alice.auth@flo.dev", "password": "hunter2!"}
+        "/auth/login", json={"email": "alice.auth@eventive.dev", "password": "hunter2!"}
     ).json()
     b = client.post(
-        "/auth/login", json={"email": "alice.auth@flo.dev", "password": "hunter2!"}
+        "/auth/login", json={"email": "alice.auth@eventive.dev", "password": "hunter2!"}
     ).json()
     r = client.post(
         "/auth/logout-all", headers={"Authorization": f"Bearer {a['access_token']}"}

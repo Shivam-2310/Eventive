@@ -7,10 +7,10 @@ import '../models/user.dart';
 ///
 /// Persisted to `SharedPreferences` — survives browser reloads / cold starts.
 class Session extends ChangeNotifier {
-  static const _kUserIdKey = 'flo.user_id';
-  static const _kAdminModeKey = 'flo.admin_mode';
-  static const _kAccessTokenKey = 'flo.access_token';
-  static const _kRefreshTokenKey = 'flo.refresh_token';
+  static const _kUserIdKey = 'eventive.user_id';
+  static const _kAdminModeKey = 'eventive.admin_mode';
+  static const _kAccessTokenKey = 'eventive.access_token';
+  static const _kRefreshTokenKey = 'eventive.refresh_token';
 
   int? _userId;
   UserRead? _user;

@@ -1,7 +1,7 @@
 [project]
-name = "flo-backend"
+name = "eventive-backend"
 version = "0.1.0"
-description = "Flo Companion Backend — FastAPI + SQLite + sqlite-vec + local ONNX embeddings"
+description = "Eventive Companion Backend — FastAPI + SQLite + sqlite-vec + local ONNX embeddings"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -22,7 +22,7 @@ dependencies = [
     "pyjwt>=2.9.0",
     "sqlglot>=25.0.0",
     "email-validator>=2.2.0",
-    # LangChain-based Ask Flo agent. Groq is the primary chat provider (fast,
+    # LangChain-based Ask Eventive agent. Groq is the primary chat provider (fast,
     # free tier ~30 rpm, native tool-calling on Llama-3.3-70B) with Gemini as
     # a fallback for when the Groq key isn't set. See app/domain/ai/agent.py.
     "langchain>=0.3.0",

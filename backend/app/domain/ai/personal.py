@@ -1,4 +1,4 @@
-"""User-scoped question handlers for Ask Flo.
+"""User-scoped question handlers for Ask Eventive.
 
 These fire once the :mod:`app.domain.ai.intent` classifier tags a message as
 ``personal_query``. Everything here is deterministic, ORM-backed, and returns
@@ -484,7 +484,7 @@ def my_wrapped(db: Session, user_id: int) -> dict[str, Any]:
         ).scalars().all()
     )
     prose = (
-        f"Your Flo Wrapped so far:\n"
+        f"Your Eventive Wrapped so far:\n"
         f"• Liked events: {total['like']}\n"
         f"• Saved events: {total['save']}\n"
         f"• RSVPs: {total['rsvp']}\n"

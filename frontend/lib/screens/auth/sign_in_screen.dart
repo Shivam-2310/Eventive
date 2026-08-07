@@ -242,7 +242,7 @@ class _SignInScreenState extends State<SignInScreen> {
           colors: AppColors.accentGradient,
         ).createShader(bounds),
         child: Text(
-          'flo',
+          'eventive',
           style: GoogleFonts.plusJakartaSans(
             fontSize: 24,
             fontWeight: FontWeight.w800,

@@ -9,7 +9,7 @@ import '../../theme/colors.dart';
 /// Animated splash shown before the app boots into its first real screen.
 ///
 /// Layered sine waves slide in from the top and bottom, then part outward to
-/// reveal the "flo" wordmark, which itself scales/fades in with an elastic
+/// reveal the "eventive" wordmark, which itself scales/fades in with an elastic
 /// pop. After the sequence finishes we fade-through into [destination].
 ///
 /// This is purely presentational — no session/auth logic lives here; the
@@ -209,7 +209,7 @@ class _SplashScreenState extends State<SplashScreen>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'flo',
+                          'eventive',
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 72,
                             fontWeight: FontWeight.w800,

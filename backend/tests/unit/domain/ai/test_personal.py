@@ -43,10 +43,10 @@ def test_my_saved_events_populated(seeded, db_session) -> None:  # noqa: ANN001,
 
 
 def test_my_interests_reads_from_seed(seeded, db_session) -> None:  # noqa: ANN001, ARG001
-    # Alice (email alice@flo.dev) is user 2 in the seed
+    # Alice (email alice@eventive.dev) is user 2 in the seed
     from app.models.user import User
 
-    alice = db_session.execute(select(User).where(User.email == "alice@flo.dev")).scalars().first()
+    alice = db_session.execute(select(User).where(User.email == "alice@eventive.dev")).scalars().first()
     assert alice is not None
     res = personal.my_interests(db_session, alice.id)
     assert res["ok"] is True
@@ -57,7 +57,7 @@ def test_my_interests_reads_from_seed(seeded, db_session) -> None:  # noqa: ANN0
 def test_my_connections_and_pending(seeded, db_session) -> None:  # noqa: ANN001, ARG001
     from app.models.user import User
 
-    alice = db_session.execute(select(User).where(User.email == "alice@flo.dev")).scalars().first()
+    alice = db_session.execute(select(User).where(User.email == "alice@eventive.dev")).scalars().first()
     res = personal.my_connections(db_session, alice.id)
     assert res["ok"] is True
     # seed makes alice ↔ bob an accepted pair

@@ -18,7 +18,7 @@ import 'widgets/event_card.dart';
 import 'widgets/event_row.dart';
 import 'widgets/person_card.dart';
 
-enum FlonnectMode { events, people }
+enum EventiveConnectMode { events, people }
 
 /// Sub-modes for the Events tab.
 ///
@@ -33,15 +33,15 @@ enum EventDeckMode { all, forYou }
 
 /// The main discovery surface — chronological Events list, personalised For
 /// You deck, or People recommendations.
-class FlonnectScreen extends StatefulWidget {
-  const FlonnectScreen({super.key});
+class EventiveConnectScreen extends StatefulWidget {
+  const EventiveConnectScreen({super.key});
 
   @override
-  State<FlonnectScreen> createState() => _FlonnectScreenState();
+  State<EventiveConnectScreen> createState() => _EventiveConnectScreenState();
 }
 
-class _FlonnectScreenState extends State<FlonnectScreen> {
-  FlonnectMode _mode = FlonnectMode.events;
+class _EventiveConnectScreenState extends State<EventiveConnectScreen> {
+  EventiveConnectMode _mode = EventiveConnectMode.events;
   EventDeckMode _eventDeck = EventDeckMode.all;
 
   final List<EventCard> _eventCards = [];
@@ -75,7 +75,7 @@ class _FlonnectScreenState extends State<FlonnectScreen> {
       if (!_allEventsScroll.hasClients) return;
       final pos = _allEventsScroll.position;
       if (pos.pixels >= pos.maxScrollExtent - 400) {
-        if (_mode == FlonnectMode.events &&
+        if (_mode == EventiveConnectMode.events &&
             _eventDeck == EventDeckMode.all &&
             !_loadingEvents &&
             !_eventsExhausted) {
@@ -342,7 +342,7 @@ class _FlonnectScreenState extends State<FlonnectScreen> {
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
     final isAllList =
-        _mode == FlonnectMode.events && _eventDeck == EventDeckMode.all;
+        _mode == EventiveConnectMode.events && _eventDeck == EventDeckMode.all;
 
     // The "All events" branch owns a full light-themed scaffold (its own
     // header, search field and list). The other two branches are full-bleed
@@ -352,7 +352,7 @@ class _FlonnectScreenState extends State<FlonnectScreen> {
     }
 
     final body =
-        _mode == FlonnectMode.events ? _buildForYouDeck() : _buildPeople();
+        _mode == EventiveConnectMode.events ? _buildForYouDeck() : _buildPeople();
     // The immersive Hinge-style decks use a card with rounded corners
     // (ClipRRect in SwipeableCard). Without a dark backdrop, those rounded
     // corners reveal the Scaffold's default white background as small white
@@ -371,7 +371,7 @@ class _FlonnectScreenState extends State<FlonnectScreen> {
             right: 0,
             child: Center(child: _buildModeToggle(dark: true)),
           ),
-          if (_mode == FlonnectMode.events)
+          if (_mode == EventiveConnectMode.events)
             Positioned(
               top: topPadding + kAppHeaderHeight + 64,
               left: 0,
@@ -548,30 +548,30 @@ class _FlonnectScreenState extends State<FlonnectScreen> {
         children: [
           _PillButton(
             label: 'Events',
-            selected: _mode == FlonnectMode.events,
+            selected: _mode == EventiveConnectMode.events,
             dark: dark,
             hPad: 20,
             vPad: 8,
             fontSize: 14,
             radius: 24,
             onTap: () {
-              if (_mode == FlonnectMode.events) return;
+              if (_mode == EventiveConnectMode.events) return;
               AppHaptics.selection();
-              setState(() => _mode = FlonnectMode.events);
+              setState(() => _mode = EventiveConnectMode.events);
             },
           ),
           _PillButton(
             label: 'People',
-            selected: _mode == FlonnectMode.people,
+            selected: _mode == EventiveConnectMode.people,
             dark: dark,
             hPad: 20,
             vPad: 8,
             fontSize: 14,
             radius: 24,
             onTap: () {
-              if (_mode == FlonnectMode.people) return;
+              if (_mode == EventiveConnectMode.people) return;
               AppHaptics.selection();
-              setState(() => _mode = FlonnectMode.people);
+              setState(() => _mode = EventiveConnectMode.people);
             },
           ),
         ],

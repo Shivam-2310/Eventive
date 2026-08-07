@@ -19,7 +19,7 @@ def test_like_event_records_interaction(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "l@flo.dev")
+    u = _mk_user(db_session, "l@eventive.dev")
     ev = event_service.create_event(db_session, EventCreate(title="E"))
     res = tools.like_event(db_session, u.id, ev.id)
     assert res["ok"] is True
@@ -35,7 +35,7 @@ def test_rsvp_event_records_interaction(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "r@flo.dev")
+    u = _mk_user(db_session, "r@eventive.dev")
     ev = event_service.create_event(db_session, EventCreate(title="E"))
     res = tools.rsvp_event(db_session, u.id, ev.id)
     assert res["ok"] is True
@@ -46,8 +46,8 @@ def test_open_match_creates_pending_connection(db_session) -> None:  # noqa: ANN
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "om-a@flo.dev")
-    b = _mk_user(db_session, "om-b@flo.dev")
+    a = _mk_user(db_session, "om-a@eventive.dev")
+    b = _mk_user(db_session, "om-b@eventive.dev")
     res = tools.open_match(db_session, a.id, b.id)
     assert res["ok"] is True
     assert res["status"] == "pending"
@@ -67,7 +67,7 @@ def test_parse_and_execute_matches_like(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "pe@flo.dev")
+    u = _mk_user(db_session, "pe@eventive.dev")
     ev = event_service.create_event(db_session, EventCreate(title="E"))
     res = tools.parse_and_execute(db_session, u.id, f"please like event {ev.id}")
     assert res is not None and res["type"] == "like"
@@ -77,7 +77,7 @@ def test_parse_and_execute_matches_rsvp(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "pr@flo.dev")
+    u = _mk_user(db_session, "pr@eventive.dev")
     ev = event_service.create_event(db_session, EventCreate(title="E"))
     res = tools.parse_and_execute(db_session, u.id, f"can you rsvp to event {ev.id}")
     assert res is not None and res["type"] == "rsvp"
@@ -87,8 +87,8 @@ def test_parse_and_execute_matches_open_match(db_session) -> None:  # noqa: ANN0
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "pm-a@flo.dev")
-    b = _mk_user(db_session, "pm-b@flo.dev")
+    a = _mk_user(db_session, "pm-a@eventive.dev")
+    b = _mk_user(db_session, "pm-b@eventive.dev")
     res = tools.parse_and_execute(db_session, a.id, f"open match with user {b.id}")
     assert res is not None and res["status"] == "pending"
 
@@ -97,5 +97,5 @@ def test_parse_and_execute_returns_none_for_unknown(db_session) -> None:  # noqa
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "u@flo.dev")
+    u = _mk_user(db_session, "u@eventive.dev")
     assert tools.parse_and_execute(db_session, u.id, "what is the weather like?") is None

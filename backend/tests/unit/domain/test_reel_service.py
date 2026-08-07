@@ -16,7 +16,7 @@ def test_create_reel_starts_in_processing(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "reel-owner@flo.dev")
+    u = _mk_user(db_session, "reel-owner@eventive.dev")
     reel = reel_service.create_reel(
         db_session,
         user_id=u.id,
@@ -33,7 +33,7 @@ def test_create_reel_normalizes_bad_suffix(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "n@flo.dev")
+    u = _mk_user(db_session, "n@eventive.dev")
     reel = reel_service.create_reel(db_session, u.id, filename="clip.exe", content=b"x")
     assert reel.storage_key.endswith(".mp4")
 
@@ -43,7 +43,7 @@ def test_list_feed_returns_only_ready(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "feed@flo.dev")
+    u = _mk_user(db_session, "feed@eventive.dev")
     # Ready
     ready = Reel(user_id=u.id, status="ready", storage_key="reels/ready.mp4")
     processing = Reel(user_id=u.id, status="processing", storage_key="reels/p.mp4")
@@ -62,7 +62,7 @@ def test_delete_own_reel_removes_row(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "own@flo.dev")
+    u = _mk_user(db_session, "own@eventive.dev")
     r = Reel(user_id=u.id, status="ready", storage_key="reels/own.mp4")
     db_session.add(r)
     db_session.commit()
@@ -75,8 +75,8 @@ def test_delete_reel_by_non_owner_returns_false(db_session) -> None:  # noqa: AN
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "a@flo.dev")
-    b = _mk_user(db_session, "b@flo.dev")
+    a = _mk_user(db_session, "a@eventive.dev")
+    b = _mk_user(db_session, "b@eventive.dev")
     r = Reel(user_id=a.id, status="ready", storage_key="reels/a.mp4")
     db_session.add(r)
     db_session.commit()
@@ -89,7 +89,7 @@ def test_admin_delete_reel(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "adm@flo.dev")
+    u = _mk_user(db_session, "adm@eventive.dev")
     r = Reel(user_id=u.id, status="ready", storage_key="reels/adm.mp4")
     db_session.add(r)
     db_session.commit()
@@ -102,7 +102,7 @@ def test_record_interaction_valid_and_invalid(db_session) -> None:  # noqa: ANN0
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "int@flo.dev")
+    u = _mk_user(db_session, "int@eventive.dev")
     r = Reel(user_id=u.id, status="ready", storage_key="reels/i.mp4")
     db_session.add(r)
     db_session.commit()

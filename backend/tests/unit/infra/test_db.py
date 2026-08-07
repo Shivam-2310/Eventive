@@ -97,7 +97,7 @@ def test_reset_engine_for_tests_repoints_engine(tmp_data_dir: Path) -> None:
     from app.infra import db as db_module
     from app.infra.config import get_settings
 
-    ensure_1_path = tmp_data_dir / "flo.db"
+    ensure_1_path = tmp_data_dir / "eventive.db"
     db_module.ensure_schema()
     assert ensure_1_path.exists()
 

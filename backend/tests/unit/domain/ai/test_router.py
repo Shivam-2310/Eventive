@@ -36,7 +36,7 @@ def _force_intent(monkeypatch, intent: str) -> None:  # noqa: ANN001
 
 
 def test_semantic_search_branch_emits_citations(seeded, db_session, monkeypatch) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="rt-sem@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="rt-sem@eventive.dev", name="X"))
     _force_intent(monkeypatch, "semantic_search")
     events = _collect(ai_router.handle_chat_stream(db_session, user.id, "AI safety talks"))
     kinds = {e["event"] for e in events}
@@ -60,7 +60,7 @@ def test_semantic_search_branch_emits_citations(seeded, db_session, monkeypatch)
 
 
 def test_structured_query_branch_uses_nl2sql(seeded, db_session, monkeypatch) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="rt-sq@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="rt-sq@eventive.dev", name="X"))
     _force_intent(monkeypatch, "structured_query")
     events = _collect(ai_router.handle_chat_stream(db_session, user.id, "how many events?"))
     sql_evt = next((e for e in events if e["event"] == "sql"), None)
@@ -73,7 +73,7 @@ def test_action_branch_executes_tool(seeded, db_session, monkeypatch) -> None:  
     from app.domain import event_service
     from app.schemas.event import EventCreate
 
-    user = user_service.create_user(db_session, UserCreate(email="rt-act@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="rt-act@eventive.dev", name="X"))
     ev = event_service.create_event(db_session, EventCreate(title="Actionable"))
     _force_intent(monkeypatch, "action")
 
@@ -85,7 +85,7 @@ def test_action_branch_executes_tool(seeded, db_session, monkeypatch) -> None:  
 
 def test_action_branch_unmatched_message(seeded, db_session, monkeypatch) -> None:  # noqa: ANN001, ARG001
     """If no verb matches, the router still emits a helpful chunk."""
-    user = user_service.create_user(db_session, UserCreate(email="rt-noact@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="rt-noact@eventive.dev", name="X"))
     _force_intent(monkeypatch, "action")
     events = _collect(ai_router.handle_chat_stream(db_session, user.id, "just say hello"))
     chunks = [e for e in events if e["event"] == "chunk"]
@@ -93,7 +93,7 @@ def test_action_branch_unmatched_message(seeded, db_session, monkeypatch) -> Non
 
 
 def test_audit_persistence_records_intent_and_retrieved(seeded, db_session, monkeypatch) -> None:  # noqa: ANN001, ARG001
-    user = user_service.create_user(db_session, UserCreate(email="audit@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="audit@eventive.dev", name="X"))
     _force_intent(monkeypatch, "semantic_search")
     _collect(ai_router.handle_chat_stream(db_session, user.id, "any AI safety talks?"))
     msg = db_session.execute(
@@ -107,9 +107,9 @@ def test_audit_persistence_records_intent_and_retrieved(seeded, db_session, monk
 
 
 def test_suggestions_for_returns_diverse_prompts(seeded, db_session) -> None:  # noqa: ANN001, ARG001
-    """The router seeds the Ask Flo prompt tray with a mix of intents so users
+    """The router seeds the Ask Eventive prompt tray with a mix of intents so users
     discover both semantic and structured/personal queries."""
-    user = user_service.create_user(db_session, UserCreate(email="sug@flo.dev", name="X"))
+    user = user_service.create_user(db_session, UserCreate(email="sug@eventive.dev", name="X"))
     out = ai_router.suggestions_for(db_session, user.id)
     assert len(out) >= 4
     intents = {s["intent"] for s in out}

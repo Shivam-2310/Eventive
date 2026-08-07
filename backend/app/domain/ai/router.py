@@ -77,7 +77,7 @@ async def handle_chat_stream(
                 yield evt
         except Exception as exc:
             logger.warning(
-                "Ask Flo agent failed (%s); falling back to deterministic router.",
+                "Ask Eventive agent failed (%s); falling back to deterministic router.",
                 exc,
             )
             agent_failed = True
@@ -297,7 +297,7 @@ async def _do_rag(
         {
             "role": "system",
             "content": (
-                "You are Flo, the conference companion. Answer the user's question "
+                "You are Eventive, the conference companion. Answer the user's question "
                 "in 2-4 short paragraphs using ONLY the CONTEXT blocks below. "
                 "Cite specific sources inline as [event:ID] or [speaker:ID]. "
                 "Keep the tone warm and concrete — mention titles, tracks, times, "
@@ -376,7 +376,7 @@ def _get_or_create_session(db: Session, user_id: int, session_id: int | None) ->
         s = db.get(AISession, session_id)
         if s and s.user_id == user_id:
             return s
-    s = AISession(user_id=user_id, title="Ask Flo")
+    s = AISession(user_id=user_id, title="Ask Eventive")
     db.add(s)
     db.commit()
     db.refresh(s)

@@ -1,4 +1,4 @@
-"""Sanity check on backend/data/flo.db: does it already carry a full seeded
+"""Sanity check on backend/data/eventive.db: does it already carry a full seeded
 dataset (users, events, reels, interactions), so dropping the boot-time seed
 won't strip the demo?"""
 from __future__ import annotations
@@ -6,7 +6,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-DB = Path(__file__).resolve().parent / "data" / "flo.db"
+DB = Path(__file__).resolve().parent / "data" / "eventive.db"
 
 
 def main() -> None:

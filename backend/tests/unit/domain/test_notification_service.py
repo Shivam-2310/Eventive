@@ -18,7 +18,7 @@ def test_push_writes_row(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "n@flo.dev")
+    u = _mk_user(db_session, "n@eventive.dev")
     n = notification_service.push(
         db_session, user_id=u.id, type_="test", title="Hello", body="World", deep_link="/x"
     )
@@ -32,7 +32,7 @@ def test_list_notifications_filters_unread(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "u@flo.dev")
+    u = _mk_user(db_session, "u@eventive.dev")
     notification_service.push(db_session, u.id, "t", "A")
     n2 = notification_service.push(db_session, u.id, "t", "B")
     n2.read_at = datetime.utcnow()
@@ -49,7 +49,7 @@ def test_mark_read_sets_timestamp(db_session) -> None:  # noqa: ANN001
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "mr@flo.dev")
+    u = _mk_user(db_session, "mr@eventive.dev")
     n = notification_service.push(db_session, u.id, "t", "T")
     ok = notification_service.mark_read(db_session, u.id, n.id)
     assert ok is True
@@ -63,8 +63,8 @@ def test_mark_read_returns_false_when_missing_or_foreign(db_session) -> None:  #
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    u = _mk_user(db_session, "f1@flo.dev")
-    other = _mk_user(db_session, "f2@flo.dev")
+    u = _mk_user(db_session, "f1@eventive.dev")
+    other = _mk_user(db_session, "f2@eventive.dev")
     n = notification_service.push(db_session, u.id, "t", "T")
     # Other user cannot mark
     assert notification_service.mark_read(db_session, other.id, n.id) is False
@@ -95,8 +95,8 @@ def test_connection_request_hook_fires_notification(db_session) -> None:  # noqa
     from app.infra.db import ensure_schema
 
     ensure_schema()
-    a = _mk_user(db_session, "ha@flo.dev")
-    b = _mk_user(db_session, "hb@flo.dev")
+    a = _mk_user(db_session, "ha@eventive.dev")
+    b = _mk_user(db_session, "hb@eventive.dev")
     chat_service.create_connection(db_session, a.id, b.id, None)
     # Chat service alone doesn't push — the API layer does. Assert push works.
     notification_service.push(db_session, b.id, "connection_request", "You have a request")

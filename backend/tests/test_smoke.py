@@ -10,8 +10,8 @@ os.environ.setdefault("LLM_PROVIDER", "stub")
 
 def _setup_temp_db() -> None:
     """Point the whole app at a throwaway sqlite file before importing anything."""
-    tmp = tempfile.mkdtemp(prefix="flo_test_")
-    os.environ["DATABASE_URL"] = f"sqlite:///{tmp}/flo.db"
+    tmp = tempfile.mkdtemp(prefix="eventive_test_")
+    os.environ["DATABASE_URL"] = f"sqlite:///{tmp}/eventive.db"
     os.environ["DATA_DIR"] = tmp
     os.environ["SEED_DEMO_FIXTURES"] = "true"
 
@@ -131,7 +131,7 @@ def test_full_happy_path() -> None:
     r = client.get(f"/notifications?user_id={dan['id']}").json()
     assert isinstance(r, list)
 
-    # Phase 11 — RAG backfill + Ask Flo (SSE not required; endpoint returns 200 stream)
+    # Phase 11 — RAG backfill + Ask Eventive (SSE not required; endpoint returns 200 stream)
     r = client.post("/ai/rag/backfill?force=true")
     assert r.status_code == 200
     with client.stream("POST", f"/ai/chat?user_id={dan['id']}", json={"message": "any AI safety talks today?"}) as s:

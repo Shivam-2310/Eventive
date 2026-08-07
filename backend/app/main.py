@@ -40,7 +40,7 @@ def _register_beats() -> None:
 
 @asynccontextmanager
 async def _lifespan(_app: FastAPI):
-    logger.info("Flo backend starting up")
+    logger.info("Eventive backend starting up")
     # Keep AI read-only views in sync with the current schema so a hot-reloaded
     # backend picks up any widening (e.g. ai_public_events_full) without needing
     # a fresh migration or db reset.
@@ -56,15 +56,15 @@ async def _lifespan(_app: FastAPI):
     start_scheduler()
     yield
     stop_scheduler()
-    logger.info("Flo backend shutting down")
+    logger.info("Eventive backend shutting down")
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(
-        title="Flo Companion Backend",
+        title="Eventive Companion Backend",
         version="0.1.0",
-        description="FastAPI + SQLite + sqlite-vec backend for the Flo event companion.",
+        description="FastAPI + SQLite + sqlite-vec backend for the Eventive event companion.",
         lifespan=_lifespan,
     )
 

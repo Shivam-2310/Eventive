@@ -1,4 +1,4 @@
-"""Deterministic single-record lookups used by Ask Flo.
+"""Deterministic single-record lookups used by Ask Eventive.
 
 Kept separate from :mod:`app.domain.ai.personal` because these are lookups
 about the public catalog (any event / any speaker), not about the current

@@ -17,7 +17,7 @@ import '../../theme/spacing.dart';
 import '../../utils/ui_errors.dart';
 import '../connections/chat_screen.dart';
 import '../connections/threads_screen.dart';
-import '../flonnect/detail/event_sheet.dart';
+import '../eventiveconnect/detail/event_sheet.dart';
 import '../missions/missions_screen.dart';
 
 /// Inbox for `GET /notifications` + live pushes over `WS /ws/notifications`.
@@ -375,7 +375,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  /// Fetches the event by id then opens the same bottom sheet the Flonnect
+  /// Fetches the event by id then opens the same bottom sheet the EventiveConnect
   /// deck uses. We pass an empty `prompts` list because notifications don't
   /// carry them — the sheet's own refresh path repopulates on demand.
   Future<void> _openEventSheet(Services services, int eventId) async {

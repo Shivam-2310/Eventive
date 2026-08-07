@@ -1,4 +1,4 @@
-package com.flo.flo_app
+package com.eventive.eventive_app
 
 import io.flutter.embedding.android.FlutterActivity
 

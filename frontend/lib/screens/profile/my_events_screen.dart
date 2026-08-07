@@ -7,7 +7,7 @@ import '../../services/services.dart';
 import '../../theme/colors.dart';
 import '../../theme/radius.dart';
 import '../../utils/ui_errors.dart';
-import '../flonnect/detail/event_sheet.dart';
+import '../eventiveconnect/detail/event_sheet.dart';
 
 /// "My activity" screen — one tab per interaction bucket, each backed by
 /// `GET /users/{id}/events`. Every card observes the shared
@@ -64,7 +64,7 @@ class _MyEventsScreenState extends State<MyEventsScreen>
       accent: Color(0xFF8B5CF6),
       emptyTitle: 'Attended list is empty',
       emptyBody:
-          'Mark a session as attended so Flo can power your Wrapped recap.',
+          'Mark a session as attended so Eventive can power your Wrapped recap.',
     ),
   ];
 

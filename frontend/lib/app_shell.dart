@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'models/notification.dart';
 import 'screens/connections/threads_screen.dart';
 import 'screens/feels/feels_screen.dart';
-import 'screens/flobot/flobot_screen.dart';
-import 'screens/flonnect/flonnect_screen.dart';
+import 'screens/eventivebot/eventivebot_screen.dart';
+import 'screens/eventiveconnect/eventiveconnect_screen.dart';
 import 'screens/notifications/notifications_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'services/services.dart';
@@ -19,8 +19,8 @@ import 'widgets/navigation/floating_nav_bar.dart';
 
 /// Height of the sticky app header (excluding the OS status-bar / notch).
 ///
-/// Exposed as a top-level constant so every top-level screen (flobot,
-/// flonnect, feels, …) can pad its own content with
+/// Exposed as a top-level constant so every top-level screen (eventivebot,
+/// eventiveconnect, feels, …) can pad its own content with
 /// `MediaQuery.of(context).padding.top + kAppHeaderHeight` and never
 /// collide with the header buttons.
 const double kAppHeaderHeight = 58;
@@ -41,8 +41,8 @@ class _AppShellState extends State<AppShell> {
 
   final _screens = const [
     FeelsScreen(),
-    FlonnectScreen(),
-    FloBotScreen(),
+    EventiveConnectScreen(),
+    EventiveBotScreen(),
   ];
 
   @override
@@ -186,8 +186,8 @@ class _AppShellState extends State<AppShell> {
   }) {
     // Solid, light-themed header container that acts as a proper app bar on
     // every tab. Previously this was fully transparent, which worked on the
-    // Flonnect hinge deck but left the buttons floating over (and colliding
-    // with) light content on the Ask Flo chat and the Events list.
+    // EventiveConnect hinge deck but left the buttons floating over (and colliding
+    // with) light content on the Ask Eventive chat and the Events list.
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
@@ -211,13 +211,13 @@ class _AppShellState extends State<AppShell> {
       child: Row(
         children: [
           // The Feels (reel/video) tab shows "Waves" as its wordmark;
-          // every other tab keeps the plain "flo" wordmark.
+          // every other tab keeps the plain "eventive" wordmark.
           ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
               colors: AppColors.accentGradient,
             ).createShader(bounds),
             child: Text(
-              isFeelsTab ? 'Waves' : 'flo',
+              isFeelsTab ? 'Waves' : 'eventive',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 26,
                 fontWeight: FontWeight.w800,

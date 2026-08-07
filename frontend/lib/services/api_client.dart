@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'api_exception.dart';
 
-/// Centralized HTTP client for the Flo backend.
+/// Centralized HTTP client for the Eventive backend.
 ///
 /// - Base URL comes from `--dart-define=API_BASE_URL=...`, defaulting to
 ///   `http://localhost:8000`.

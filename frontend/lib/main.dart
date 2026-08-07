@@ -19,20 +19,20 @@ Future<void> main() async {
 
   final services = Services.build();
   await services.session.load();
-  runApp(FloApp(services: services));
+  runApp(EventiveApp(services: services));
 }
 
-class FloApp extends StatelessWidget {
+class EventiveApp extends StatelessWidget {
   final Services services;
 
-  const FloApp({super.key, required this.services});
+  const EventiveApp({super.key, required this.services});
 
   @override
   Widget build(BuildContext context) {
     return ServiceScope(
       services: services,
       child: MaterialApp(
-        title: 'Flo',
+        title: 'Eventive',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         home: SplashScreen(

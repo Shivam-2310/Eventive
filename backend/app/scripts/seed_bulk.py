@@ -37,131 +37,131 @@ from app.workers import embeddings as emb_worker
 
 logger = logging.getLogger(__name__)
 
-DEMO_PASSWORD = "flo1234"
+DEMO_PASSWORD = "eventive1234"
 
 # 30 hand-crafted demo profiles. Anyone with `has_avatar=True` gets a stable pravatar
 # image keyed off their email so the same photo appears on every reload.
 USER_PROFILES: list[dict] = [
-    dict(email="maya.iyer@flo.dev", name="Maya Iyer", role="ML Engineer", company="Kaleido AI",
+    dict(email="maya.iyer@eventive.dev", name="Maya Iyer", role="ML Engineer", company="Kaleido AI",
          headline="Evals + RLHF + coffee.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["GenAI", "RAG", "Model Evaluation", "Python", "PyTorch"],
          blurb="Building eval harnesses for RAG at Kaleido. Ex-Google Brain."),
-    dict(email="dev.sharma@flo.dev", name="Dev Sharma", role="Founder", company="Sift Labs",
+    dict(email="dev.sharma@eventive.dev", name="Dev Sharma", role="Founder", company="Sift Labs",
          headline="Founder / building agents for legal ops.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Agents", "GenAI", "Founder", "Prompt Engineering", "TypeScript"],
          blurb="0→1 founder. Second attempt. Looking for a technical cofounder."),
-    dict(email="riya.patel@flo.dev", name="Riya Patel", role="Backend Engineer", company="Numera",
+    dict(email="riya.patel@eventive.dev", name="Riya Patel", role="Backend Engineer", company="Numera",
          headline="Turning Postgres into a vector DB, one CTE at a time.", timezone="Asia/Kolkata",
          has_avatar=True,
          interests=["Vector Search", "Postgres", "Python", "FastAPI", "Backend Engineer"],
          blurb="pgvector nerd. Happy to talk indexing tricks."),
-    dict(email="arjun.k@flo.dev", name="Arjun Krishnan", role="Researcher", company="IISc",
+    dict(email="arjun.k@eventive.dev", name="Arjun Krishnan", role="Researcher", company="IISc",
          headline="PhD candidate. Interpretability + safety.", timezone="Asia/Kolkata",
          has_avatar=False,
          interests=["AI Safety", "AI Ethics", "Model Evaluation", "Researcher"],
          blurb="Currently poking holes in aligned models."),
-    dict(email="ananya.rao@flo.dev", name="Ananya Rao", role="Product Manager", company="Flip",
+    dict(email="ananya.rao@eventive.dev", name="Ananya Rao", role="Product Manager", company="Flip",
          headline="PM on the AI copilot. Ex-Zomato.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Product Manager", "GenAI", "Developer Tools"],
          blurb="If you've thought about pricing your AI feature, we should talk."),
-    dict(email="karthik.n@flo.dev", name="Karthik Nair", role="ML Engineer", company="Poser",
+    dict(email="karthik.n@eventive.dev", name="Karthik Nair", role="ML Engineer", company="Poser",
          headline="Serving 3B params on a Jetson.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Edge AI", "PyTorch", "MLOps", "Rust", "Observability"],
          blurb="Edge inference + quantization + custom kernels."),
-    dict(email="priya.s@flo.dev", name="Priya Shetty", role="Frontend Engineer", company="Flip",
+    dict(email="priya.s@eventive.dev", name="Priya Shetty", role="Frontend Engineer", company="Flip",
          headline="Design systems + React. Loves motion.", timezone="Asia/Kolkata",
          has_avatar=True,
          interests=["Frontend Engineer", "React", "Next.js", "TypeScript"],
          blurb="Currently shipping AI-first UX at Flip."),
-    dict(email="rahul.g@flo.dev", name="Rahul Gupta", role="Backend Engineer", company="Zerodha",
+    dict(email="rahul.g@eventive.dev", name="Rahul Gupta", role="Backend Engineer", company="Zerodha",
          headline="Distributed systems @ Zerodha.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Distributed Systems", "Go", "Kafka", "Redis", "Backend Engineer"],
          blurb="Building the streaming layer for a trading platform."),
-    dict(email="sneha.d@flo.dev", name="Sneha Deshpande", role="Researcher", company="Microsoft Research",
+    dict(email="sneha.d@eventive.dev", name="Sneha Deshpande", role="Researcher", company="Microsoft Research",
          headline="Multimodal foundation models.", timezone="Asia/Kolkata", has_avatar=False,
          interests=["Multimodal AI", "Researcher", "PyTorch", "GenAI"],
          blurb="Vision + language + audio. Recent EMNLP paper on grounded reasoning."),
-    dict(email="aditya.j@flo.dev", name="Aditya Joshi", role="Founder", company="Grain",
+    dict(email="aditya.j@eventive.dev", name="Aditya Joshi", role="Founder", company="Grain",
          headline="AI voice agents for D2C support.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Founder", "Agents", "GenAI", "Prompt Engineering"],
          blurb="Series A. Hiring 2 backend engineers."),
-    dict(email="pooja.m@flo.dev", name="Pooja Menon", role="ML Engineer", company="Freshworks",
+    dict(email="pooja.m@eventive.dev", name="Pooja Menon", role="ML Engineer", company="Freshworks",
          headline="Recsys + embeddings.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Vector Search", "GenAI", "MLOps", "Python"],
          blurb="Personalization for 60M+ customer records."),
-    dict(email="vikram.b@flo.dev", name="Vikram Balaji", role="Backend Engineer", company="Razorpay",
+    dict(email="vikram.b@eventive.dev", name="Vikram Balaji", role="Backend Engineer", company="Razorpay",
          headline="Payments infra. Rust + Go.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Rust", "Go", "Distributed Systems", "Backend Engineer", "Observability"],
          blurb="Rebuilding payment orchestration in Rust."),
-    dict(email="neha.t@flo.dev", name="Neha Tiwari", role="Product Manager", company="Cred",
+    dict(email="neha.t@eventive.dev", name="Neha Tiwari", role="Product Manager", company="Cred",
          headline="PM. Loves 0→1.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Product Manager", "Fintech", "Developer Tools"],
          blurb="Currently thinking about AI in credit underwriting."),
-    dict(email="siddharth.p@flo.dev", name="Siddharth Prakash", role="ML Engineer", company="Sarvam AI",
+    dict(email="siddharth.p@eventive.dev", name="Siddharth Prakash", role="ML Engineer", company="Sarvam AI",
          headline="Working on Indic LLMs.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["GenAI", "PyTorch", "Multimodal AI", "Python"],
          blurb="Tokenizers for Indic scripts + eval sets."),
-    dict(email="anushka.v@flo.dev", name="Anushka Venkat", role="Backend Engineer", company="Ola",
+    dict(email="anushka.v@eventive.dev", name="Anushka Venkat", role="Backend Engineer", company="Ola",
          headline="Realtime systems @ Ola.", timezone="Asia/Kolkata", has_avatar=False,
          interests=["Backend Engineer", "Kafka", "Redis", "Distributed Systems"],
          blurb="Sub-100ms driver dispatch. Ask me about geosharding."),
-    dict(email="rohan.a@flo.dev", name="Rohan Agarwal", role="Founder", company="Vector Health",
+    dict(email="rohan.a@eventive.dev", name="Rohan Agarwal", role="Founder", company="Vector Health",
          headline="AI for radiologists.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Founder", "Healthcare AI", "PyTorch", "GenAI"],
          blurb="MedTech. Regulatory + clinical validation is our moat."),
-    dict(email="tanvi.b@flo.dev", name="Tanvi Bhat", role="Frontend Engineer", company="Freshworks",
+    dict(email="tanvi.b@eventive.dev", name="Tanvi Bhat", role="Frontend Engineer", company="Freshworks",
          headline="UX for internal tools.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Frontend Engineer", "React", "TypeScript"],
          blurb="If your admin panel makes you cry, I want to help."),
-    dict(email="harsh.v@flo.dev", name="Harsh Vora", role="ML Engineer", company="Airbnb",
+    dict(email="harsh.v@eventive.dev", name="Harsh Vora", role="ML Engineer", company="Airbnb",
          headline="Search ranking @ Airbnb.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Vector Search", "MLOps", "Python", "GenAI"],
          blurb="Semantic search at planet scale."),
-    dict(email="mihika.p@flo.dev", name="Mihika Pillai", role="Researcher", company="IIT Bombay",
+    dict(email="mihika.p@eventive.dev", name="Mihika Pillai", role="Researcher", company="IIT Bombay",
          headline="LLM+robotics.", timezone="Asia/Kolkata", has_avatar=False,
          interests=["Robotics", "Researcher", "PyTorch", "Multimodal AI"],
          blurb="Grasping tasks conditioned on natural language."),
-    dict(email="varun.s@flo.dev", name="Varun Suri", role="Backend Engineer", company="Postman",
+    dict(email="varun.s@eventive.dev", name="Varun Suri", role="Backend Engineer", company="Postman",
          headline="Devtools for APIs.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Developer Tools", "Backend Engineer", "TypeScript", "Docker"],
          blurb="I like tools that make bad APIs testable."),
-    dict(email="ishani.k@flo.dev", name="Ishani Kapoor", role="Frontend Engineer", company="Notion",
+    dict(email="ishani.k@eventive.dev", name="Ishani Kapoor", role="Frontend Engineer", company="Notion",
          headline="Slash commands, blocks, and joy.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Frontend Engineer", "React", "TypeScript", "Next.js"],
          blurb="Ex-Figma. Loves editors."),
-    dict(email="aakash.r@flo.dev", name="Aakash Ramesh", role="Founder", company="Ledgerly",
+    dict(email="aakash.r@eventive.dev", name="Aakash Ramesh", role="Founder", company="Ledgerly",
          headline="Fintech founder. LLMs on ledger.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Founder", "Fintech", "GenAI", "Agents"],
          blurb="Bookkeeping for SMBs — but the LLM does the work."),
-    dict(email="devika.j@flo.dev", name="Devika Jain", role="ML Engineer", company="Turing",
+    dict(email="devika.j@eventive.dev", name="Devika Jain", role="ML Engineer", company="Turing",
          headline="Coding agents.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Agents", "GenAI", "Python", "Developer Tools"],
          blurb="Fine-tuning code models on real PR history."),
-    dict(email="nikhil.b@flo.dev", name="Nikhil Bansal", role="Backend Engineer", company="Uber",
+    dict(email="nikhil.b@eventive.dev", name="Nikhil Bansal", role="Backend Engineer", company="Uber",
          headline="Streaming + Kafka + Rust.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Kafka", "Rust", "Distributed Systems", "Backend Engineer"],
          blurb="Currently reading the Aeron paper for the third time."),
-    dict(email="riya.v@flo.dev", name="Riya Verma", role="Product Manager", company="Ather Energy",
+    dict(email="riya.v@eventive.dev", name="Riya Verma", role="Product Manager", company="Ather Energy",
          headline="Battery + software.", timezone="Asia/Kolkata", has_avatar=False,
          interests=["Product Manager", "Climate Tech", "Developer Tools"],
          blurb="Turning bikes into rolling APIs."),
-    dict(email="karan.a@flo.dev", name="Karan Ahluwalia", role="ML Engineer", company="Ola Krutrim",
+    dict(email="karan.a@eventive.dev", name="Karan Ahluwalia", role="ML Engineer", company="Ola Krutrim",
          headline="Pretraining engineer.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["GenAI", "PyTorch", "Distributed Systems", "MLOps"],
          blurb="Data pipelines and DPO tuning."),
-    dict(email="preeti.d@flo.dev", name="Preeti Desai", role="Frontend Engineer", company="Zeta",
+    dict(email="preeti.d@eventive.dev", name="Preeti Desai", role="Frontend Engineer", company="Zeta",
          headline="Design systems + accessibility.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Frontend Engineer", "React", "TypeScript"],
          blurb="Colour contrast police. Sorry (not sorry)."),
-    dict(email="samar.k@flo.dev", name="Samar Khanna", role="Founder", company="Curriculum.ai",
+    dict(email="samar.k@eventive.dev", name="Samar Khanna", role="Founder", company="Curriculum.ai",
          headline="AI for K-12 teachers.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Founder", "Education", "GenAI", "Agents"],
          blurb="Teacher-in-the-loop lesson planning."),
-    dict(email="tara.m@flo.dev", name="Tara Mishra", role="Researcher", company="AI4Bharat",
+    dict(email="tara.m@eventive.dev", name="Tara Mishra", role="Researcher", company="AI4Bharat",
          headline="Low-resource NLP.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["Researcher", "Multimodal AI", "GenAI", "AI Ethics"],
          blurb="Multi-lingual eval benchmarks for Indian languages."),
-    dict(email="ayaan.j@flo.dev", name="Ayaan Jaffer", role="ML Engineer", company="Meesho",
+    dict(email="ayaan.j@eventive.dev", name="Ayaan Jaffer", role="ML Engineer", company="Meesho",
          headline="Ranking + recommendations.", timezone="Asia/Kolkata", has_avatar=True,
          interests=["MLOps", "Vector Search", "Python", "GenAI"],
          blurb="Cold-start recs for a 100M+ user marketplace."),
@@ -445,10 +445,10 @@ def _seed_connections(db: Session, rng: random.Random) -> int:
     """Wire up a small network: ~50 connection edges across the demo users, mostly accepted.
 
     Includes alice/bob/carol (the pre-existing demo users from base_seed) so that
-    whichever account you log in as has a populated Flonnect + Threads experience.
+    whichever account you log in as has a populated EventiveConnect + Threads experience.
     """
     demo_emails = [p["email"] for p in USER_PROFILES] + [
-        "alice@flo.dev", "bob@flo.dev", "carol@flo.dev",
+        "alice@eventive.dev", "bob@eventive.dev", "carol@eventive.dev",
     ]
     users = list(db.execute(
         select(User).where(User.email.in_(demo_emails))
@@ -473,7 +473,7 @@ def _seed_connections(db: Session, rng: random.Random) -> int:
         return sum(1 for p in seen_pairs if uid in p)
 
     added = 0
-    priority_emails = ["alice@flo.dev", "bob@flo.dev", "carol@flo.dev"]
+    priority_emails = ["alice@eventive.dev", "bob@eventive.dev", "carol@eventive.dev"]
     priority_users = [u for u in users if u.email in priority_emails]
     others = [u for u in users if u.email not in priority_emails]
     # Step 1: guarantee each priority user has >=5 connections.
@@ -519,7 +519,7 @@ def _seed_connections(db: Session, rng: random.Random) -> int:
 def _seed_messages(db: Session, rng: random.Random) -> int:
     """Create threads for accepted connections + drop 1-4 messages per thread."""
     demo_emails = [p["email"] for p in USER_PROFILES] + [
-        "alice@flo.dev", "bob@flo.dev", "carol@flo.dev",
+        "alice@eventive.dev", "bob@eventive.dev", "carol@eventive.dev",
     ]
     demo_ids = {u.id for u in db.execute(
         select(User).where(User.email.in_(demo_emails))
@@ -604,7 +604,7 @@ def _seed_notifications(db: Session, rng: random.Random) -> int:
         db.add(Notification(
             user_id=user.id,
             type="welcome",
-            title="Welcome to Flo",
+            title="Welcome to Eventive",
             body=f"Hey {user.name.split()[0]} — pick 3 sessions to build your Day 1.",
             deep_link="/events/discover",
         ))

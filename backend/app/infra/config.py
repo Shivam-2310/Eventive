@@ -13,13 +13,13 @@ class Settings(BaseSettings):
         case_sensitive=False,
     )
 
-    DATABASE_URL: str = "sqlite:///./data/flo.db"
+    DATABASE_URL: str = "sqlite:///./data/eventive.db"
     DATA_DIR: str = "./data"
     PORT: int = 8000
 
-    # Chat/completion LLM (used by FloBot, NL2SQL, recommendation reasons).
+    # Chat/completion LLM (used by EventiveBot, NL2SQL, recommendation reasons).
     # Options: "stub" (deterministic, offline), "gemini", "groq".
-    # The LangChain Ask Flo agent (app/domain/ai/agent.py) picks its provider
+    # The LangChain Ask Eventive agent (app/domain/ai/agent.py) picks its provider
     # in this order regardless of LLM_PROVIDER: Groq (if GROQ_API_KEY is set)
     # → Gemini (if GEMINI_API_KEY is set) → deterministic regex fallback.
     LLM_PROVIDER: str = "stub"
@@ -43,7 +43,7 @@ class Settings(BaseSettings):
     JWT_ACCESS_TTL_MIN: int = 15
     JWT_REFRESH_TTL_DAYS: int = 7
 
-    ADMIN_EMAIL: str = "admin@flo.dev"
+    ADMIN_EMAIL: str = "admin@eventive.dev"
     ADMIN_INITIAL_PASSWORD: str = "admin"
 
     MEDIA_SIGNING_SECRET: str = "dev-media-secret"

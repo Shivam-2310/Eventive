@@ -8,28 +8,28 @@ from app.domain import user_service
 from app.schemas.user import UserCreate, UserUpdate
 
 
-def _make(db, email: str = "test@flo.dev", name: str = "Test") -> object:  # noqa: ANN001
+def _make(db, email: str = "test@eventive.dev", name: str = "Test") -> object:  # noqa: ANN001
     return user_service.create_user(db, UserCreate(email=email, name=name))
 
 
 def test_create_user_persists_row(db_session) -> None:  # noqa: ANN001
     u = _make(db_session)
     assert u.id is not None
-    assert u.email == "test@flo.dev"
+    assert u.email == "test@eventive.dev"
     assert u.opt_in_networking is True  # default from schema
 
 
 def test_get_and_get_by_email(db_session) -> None:  # noqa: ANN001
-    u = _make(db_session, email="lookup@flo.dev")
+    u = _make(db_session, email="lookup@eventive.dev")
     assert user_service.get_user(db_session, u.id).id == u.id
-    assert user_service.get_by_email(db_session, "lookup@flo.dev").id == u.id
-    assert user_service.get_by_email(db_session, "nope@flo.dev") is None
+    assert user_service.get_by_email(db_session, "lookup@eventive.dev").id == u.id
+    assert user_service.get_by_email(db_session, "nope@eventive.dev") is None
     assert user_service.get_user(db_session, 999_999) is None
 
 
 def test_list_users_pagination(db_session) -> None:  # noqa: ANN001
     for i in range(5):
-        _make(db_session, email=f"u{i}@flo.dev", name=f"U{i}")
+        _make(db_session, email=f"u{i}@eventive.dev", name=f"U{i}")
     all_users = user_service.list_users(db_session)
     assert len(all_users) == 5
     page = user_service.list_users(db_session, limit=2, offset=2)
@@ -46,7 +46,7 @@ def test_update_user_partial_patch(db_session) -> None:  # noqa: ANN001
     assert updated.name == "New Name"
     assert updated.opt_in_networking is False
     # Email unchanged.
-    assert updated.email == "test@flo.dev"
+    assert updated.email == "test@eventive.dev"
 
 
 def test_update_user_returns_none_when_missing(db_session) -> None:  # noqa: ANN001
@@ -63,9 +63,9 @@ def test_delete_user(db_session) -> None:  # noqa: ANN001
 
 def test_duplicate_email_raises_integrity_error(db_session) -> None:  # noqa: ANN001
     """`user` has a UNIQUE(email) constraint — repeated create must raise."""
-    _make(db_session, email="dup@flo.dev")
+    _make(db_session, email="dup@eventive.dev")
     with pytest.raises(IntegrityError):
-        _make(db_session, email="dup@flo.dev")
+        _make(db_session, email="dup@eventive.dev")
 
 
 def test_touch_last_seen_sets_timestamp(db_session) -> None:  # noqa: ANN001
@@ -95,7 +95,7 @@ def test_create_user_synchronously_embeds_profile(db_session) -> None:  # noqa: 
     Also fires from `/auth/register` because register → create_user."""
     from sqlalchemy import text as sql_text
 
-    u = _make(db_session, email="autoembed@flo.dev", name="Auto")
+    u = _make(db_session, email="autoembed@eventive.dev", name="Auto")
     row = db_session.execute(
         sql_text("SELECT embedding FROM vec_user_profile WHERE user_id = :k"),
         {"k": u.id},
@@ -111,5 +111,5 @@ def test_create_user_swallows_embed_failure(db_session, monkeypatch) -> None:  #
         raise RuntimeError("embedder down")
 
     monkeypatch.setattr(emb_worker, "embed_user_profile", _boom)
-    u = _make(db_session, email="safe@flo.dev", name="Safe")
+    u = _make(db_session, email="safe@eventive.dev", name="Safe")
     assert u.id is not None

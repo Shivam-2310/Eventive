@@ -1,4 +1,4 @@
-"""LangChain-based Ask Flo agent.
+"""LangChain-based Ask Eventive agent.
 
 Design (deliberately minimal — one agent, one tool):
 
@@ -77,7 +77,7 @@ def get_llm() -> Any | None:
                 temperature=0.2,
             )
             _llm_name = f"groq:{settings.GROQ_MODEL}"
-            logger.info("Ask Flo agent using %s", _llm_name)
+            logger.info("Ask Eventive agent using %s", _llm_name)
             return _llm
         except Exception as exc:
             logger.warning("Groq init failed (%s); trying Gemini next.", exc)
@@ -92,12 +92,12 @@ def get_llm() -> Any | None:
                 temperature=0.2,
             )
             _llm_name = f"gemini:{settings.GEMINI_CHAT_MODEL}"
-            logger.info("Ask Flo agent using %s", _llm_name)
+            logger.info("Ask Eventive agent using %s", _llm_name)
             return _llm
         except Exception as exc:
             logger.warning("Gemini init failed (%s); agent unavailable.", exc)
 
-    logger.info("No LLM key configured; Ask Flo agent will use deterministic fallback.")
+    logger.info("No LLM key configured; Ask Eventive agent will use deterministic fallback.")
     return None
 
 
@@ -269,7 +269,7 @@ def _compact(raw: dict) -> dict:
 
 # ---- prompt + streaming agent ---------------------------------------------
 
-SYSTEM_PROMPT = """You are **Flo**, a warm, concise AI assistant for a corporate hackathon event.
+SYSTEM_PROMPT = """You are **Eventive**, a warm, concise AI assistant for a corporate hackathon event.
 
 Your job: help the current user (see USER SNAPSHOT below) navigate the event,
 discover talks and speakers, and plan their day.
@@ -294,7 +294,7 @@ Behaviour rules:
 async def run_agent_stream(
     db: Session, user_id: int, message: str
 ) -> AsyncIterator[dict[str, Any]]:
-    """Run one Ask Flo turn. Yields SSE-shaped dicts compatible with the
+    """Run one Ask Eventive turn. Yields SSE-shaped dicts compatible with the
     router's existing envelope (intent, tool, sql, citation, chunk).
     """
     from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage

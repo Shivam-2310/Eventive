@@ -121,7 +121,7 @@ def _save_jpeg(img: Image.Image, dst: Path, max_side: int = 512, quality: int = 
 
 _WIKI_SUMMARY = "https://en.wikipedia.org/api/rest_v1/page/summary/{name}"
 _WIKI_API = "https://en.wikipedia.org/w/api.php"
-_UA = {"User-Agent": "flo-seed-assets/1.0 (local demo seeding; contact: dev@flo.local)"}
+_UA = {"User-Agent": "eventive-seed-assets/1.0 (local demo seeding; contact: dev@eventive.local)"}
 
 # Wikipedia's exact-title lookup misses many well-known people (disambiguation
 # pages, alternative spellings, wrong "Jeremy Howard"). This override table
@@ -635,7 +635,7 @@ def _extract_thumbnail(src: Path, dst: Path, at_seconds: float = 0.5) -> None:
 
 
 _REEL_CAPTIONS = [
-    "Kicking off day one at Flo",
+    "Kicking off day one at Eventive",
     "Backstage energy is unreal",
     "Between sessions vibes",
     "That moment when RAG finally clicks",

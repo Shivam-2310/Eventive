@@ -15,8 +15,8 @@ class FloatingNavBar extends StatelessWidget {
 
   static const _items = [
     _NavItem(icon: Icons.play_circle_outline_rounded, activeIcon: Icons.play_circle_rounded, label: 'Feels'),
-    _NavItem(icon: Icons.people_outline_rounded, activeIcon: Icons.people_rounded, label: 'Flonnect'),
-    _NavItem(icon: Icons.auto_awesome_outlined, activeIcon: Icons.auto_awesome, label: 'Flo Bot'),
+    _NavItem(icon: Icons.people_outline_rounded, activeIcon: Icons.people_rounded, label: 'EventiveConnect'),
+    _NavItem(icon: Icons.auto_awesome_outlined, activeIcon: Icons.auto_awesome, label: 'Eventive Bot'),
   ];
 
   @override

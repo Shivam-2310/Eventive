@@ -17,7 +17,7 @@ def test_log_admin_action_writes_row(db_session) -> None:  # noqa: ANN001
     from app.schemas.user import UserCreate
 
     actor = user_service.create_user(
-        db_session, UserCreate(email="actor@flo.dev", name="Actor", is_admin=True)
+        db_session, UserCreate(email="actor@eventive.dev", name="Actor", is_admin=True)
     )
     row = admin_service.log_admin_action(
         db_session,

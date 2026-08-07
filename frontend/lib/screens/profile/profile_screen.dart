@@ -280,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         _buildTile(
           Icons.info_outline_rounded,
-          'About Flo',
+          'About Eventive',
           AppColors.textSecondary,
           onTap: _showAbout,
         ),
@@ -459,7 +459,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showAbout() {
     showAboutDialog(
       context: context,
-      applicationName: 'Flo Companion',
+      applicationName: 'Eventive Companion',
       applicationVersion: '0.1.0',
       applicationLegalese:
           'Backend base URL:\n${ServiceScope.of(context).api.baseUrl}',

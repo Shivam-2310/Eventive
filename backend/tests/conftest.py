@@ -1,4 +1,4 @@
-"""Shared fixtures for the Flo backend test suite.
+"""Shared fixtures for the Eventive backend test suite.
 
 Every test starts from a fresh SQLite file under ``tmp_path``, a fresh
 ``DATA_DIR`` and ``LLM_PROVIDER=stub`` so nothing ever hits Gemini or leaks
@@ -21,11 +21,11 @@ def _isolated_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[P
     """Rewire the whole app to a throwaway SQLite file + DATA_DIR per test."""
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    db_url = f"sqlite:///{(data_dir / 'flo.db').as_posix()}"
+    db_url = f"sqlite:///{(data_dir / 'eventive.db').as_posix()}"
     monkeypatch.setenv("DATABASE_URL", db_url)
     monkeypatch.setenv("DATA_DIR", str(data_dir))
     monkeypatch.setenv("LLM_PROVIDER", "stub")
-    # Ensure the LangChain Ask Flo agent (app/domain/ai/agent.py) stays
+    # Ensure the LangChain Ask Eventive agent (app/domain/ai/agent.py) stays
     # unavailable in tests so the deterministic router runs. Otherwise a
     # locally-set GROQ_API_KEY / GEMINI_API_KEY would silently swap the router
     # onto a network path.
@@ -36,7 +36,7 @@ def _isolated_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[P
     # the first time any test hits `embed_batch`.
     monkeypatch.setenv("EMBED_PROVIDER", "stub")
     monkeypatch.setenv("SEED_DEMO_FIXTURES", "true")
-    monkeypatch.setenv("ADMIN_EMAIL", "admin@flo.dev")
+    monkeypatch.setenv("ADMIN_EMAIL", "admin@eventive.dev")
     monkeypatch.setenv("ADMIN_INITIAL_PASSWORD", "admin")
     monkeypatch.setenv("MEDIA_SIGNING_SECRET", "test-media-secret")
     monkeypatch.setenv("CORS_ORIGINS", "*")

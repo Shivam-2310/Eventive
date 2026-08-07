@@ -1,5 +1,5 @@
-import 'package:flo_app/main.dart';
-import 'package:flo_app/services/services.dart';
+import 'package:eventive_app/main.dart';
+import 'package:eventive_app/services/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -8,7 +8,7 @@ void main() {
     // network call until a widget actually asks for data, so the smoke pump
     // stays offline.
     final services = Services.build();
-    await tester.pumpWidget(FloApp(services: services));
-    expect(find.byType(FloApp), findsOneWidget);
+    await tester.pumpWidget(EventiveApp(services: services));
+    expect(find.byType(EventiveApp), findsOneWidget);
   });
 }

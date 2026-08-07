@@ -15,20 +15,20 @@ import '../../widgets/chat/chat_bubble.dart';
 import '../../widgets/chat/quick_action_chip.dart';
 import '../../widgets/chat/typing_indicator.dart';
 
-/// Ask Flo — real streaming AI chat backed by `POST /ai/chat` (§14.2).
+/// Ask Eventive — real streaming AI chat backed by `POST /ai/chat` (§14.2).
 ///
 /// - Loads starter chips from `GET /ai/suggestions?user_id=…`.
 /// - Streams SSE frames and appends `chunk` frames to the current assistant
 ///   bubble in real-time. Citations, SQL results, tool calls are displayed
 ///   as side-signals under the answer.
-class FloBotScreen extends StatefulWidget {
-  const FloBotScreen({super.key});
+class EventiveBotScreen extends StatefulWidget {
+  const EventiveBotScreen({super.key});
 
   @override
-  State<FloBotScreen> createState() => _FloBotScreenState();
+  State<EventiveBotScreen> createState() => _EventiveBotScreenState();
 }
 
-class _FloBotScreenState extends State<FloBotScreen> {
+class _EventiveBotScreenState extends State<EventiveBotScreen> {
   final _messages = <AiChatMessage>[];
   final _textController = TextEditingController();
   final _scrollController = ScrollController();
@@ -52,7 +52,7 @@ class _FloBotScreenState extends State<FloBotScreen> {
 
   Future<void> _bootstrap() async {
     _addAssistantMessage(
-      "Hey there! I'm Flo Bot — your AI guide to everything Flo. How can I help?",
+      "Hey there! I'm Eventive Bot — your AI guide to everything Eventive. How can I help?",
       preloaded: true,
     );
     await _loadSuggestions();
@@ -290,7 +290,7 @@ class _FloBotScreenState extends State<FloBotScreen> {
               onSubmitted: _send,
               style: const TextStyle(fontSize: 15),
               decoration: InputDecoration(
-                hintText: _streaming ? 'Streaming…' : 'Ask Flo Bot anything...',
+                hintText: _streaming ? 'Streaming…' : 'Ask Eventive Bot anything...',
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 filled: true,
